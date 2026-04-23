@@ -4,801 +4,953 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Экраны 1–2 — Capital Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 10px; }
-body { font-family: 'Inter', 'SF Pro Display', -apple-system, Arial, sans-serif; font-size: 1.4rem; background: #f8f8f8; color: #111; }
-:root { --brand-blue: #1B3F7B; --font-family: 'Inter', Arial, sans-serif; }
+body {
+  font-family: 'Inter', -apple-system, Arial, sans-serif;
+  background: #f8f8f8;
+  color: #374151;
+  min-width: 1280px;
+  overflow-x: auto;
+}
 a { text-decoration: none; color: inherit; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
-textarea, input { font-family: inherit; outline: none; }
-input-reset, .input-reset { border: none; background: none; outline: none; }
-.btn-reset { border: none; background: none; padding: 0; cursor: pointer; font-family: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; }
+input, textarea { font-family: inherit; }
 
-/* PAGE LAYOUT */
-.page__body { display: flex; min-height: 100vh; }
-
-/* SIDEBAR */
-.account-menu {
-    width: 26rem;
-    min-height: 100vh;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 3.2rem 1.6rem;
-    flex-shrink: 0;
-    border-right: 1px solid #f0f0f0;
-}
-.account-menu__top { display: flex; flex-direction: column; gap: 2.4rem; }
-.account-menu__logo img { height: 3.2rem; }
-.account-menu__logo-placeholder {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--brand-blue);
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-}
-.account-menu__logo-icon {
-    width: 3.8rem; height: 3.8rem;
-    background: var(--brand-blue);
-    border-radius: 0.8rem;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 1.4rem; font-weight: 700;
-}
-.account-menu__user {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.2rem;
-    border-radius: 1.2rem;
-    background: #f8f8f8;
-}
-.account-menu__user-avatar {
-    width: 4rem; height: 4rem;
-    border-radius: 50%;
-    background: #d0d9e8;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--brand-blue);
-    flex-shrink: 0;
-    overflow: hidden;
-}
-.account-menu__user-name { font-size: 1.4rem; font-weight: 600; color: #111; }
-.account-menu__user-company { font-size: 1.2rem; color: #9ca3af; margin-top: 0.2rem; }
-.account-menu__links { display: flex; flex-direction: column; gap: 0.4rem; }
-.account-menu__link {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1rem 1.2rem;
-    border-radius: 1rem;
-    color: #828282;
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: background 0.15s, color 0.15s;
-}
-.account-menu__link:hover { background: #f3f4f6; }
-.account-menu__link.active-link { background: #e8edf5; color: var(--brand-blue); }
-.account-menu__link.active-link svg path, .account-menu__link.active-link svg circle { fill: var(--brand-blue); stroke: var(--brand-blue); }
-.account-menu__link-img { width: 2.4rem; height: 2.4rem; flex-shrink: 0; }
-.account-menu__link-text { font-size: 1.4rem; }
-.account-menu__separator { height: 1px; background: #f0f0f0; margin-bottom: 0.8rem; }
-
-/* MAIN CONTENT */
-.account-part { flex: 1; overflow-x: auto; }
-.manager-page { padding: 4rem 4.8rem 6rem; }
-.manager-page__inner { max-width: 1400px; }
-.manager-page__title { font-size: 3.2rem; font-weight: 600; color: #111; margin-bottom: 2.4rem; }
-.manager-page__count { color: #111; }
-
-/* CONTROLS BAR */
-.manager-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-    background: #fff;
-    border-radius: 2.4rem;
-    padding: 0.6rem 1.6rem;
-}
-.manager-controls__filters { display: flex; align-items: center; gap: 0.4rem; }
-.manager-controls__right { display: flex; align-items: center; gap: 1.2rem; }
-
-/* FILTER TABS */
-.filter-tab {
-    padding: 0.8rem 1.6rem;
-    border-radius: 2rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: #828282;
-    background: transparent;
-    transition: background 0.15s, color 0.15s;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-}
-.filter-tab:hover { background: #f3f4f6; color: #374151; }
-.filter-tab--active { background: var(--brand-blue); color: #fff; }
-.filter-tab--active:hover { background: var(--brand-blue); color: #fff; }
-
-/* SORT DROPDOWN */
-.sort-dropdown { position: relative; }
-.sort-dropdown__selected {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.8rem 1.2rem;
-    border-radius: 2rem;
-    cursor: pointer;
-    font-size: 1.4rem;
-    color: #374151;
-    transition: background 0.15s;
-}
-.sort-dropdown__selected:hover { background: #f3f4f6; }
-.sort__label { color: #9ca3af; }
-.sort__arrow { transition: transform 0.2s; }
-.sort-dropdown.open .sort__arrow { transform: rotate(180deg); }
-.sort-dropdown__options {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    background: #fff;
-    border-radius: 1.2rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    padding: 0.6rem;
-    z-index: 50;
-    min-width: 18rem;
-}
-.sort-dropdown.open .sort-dropdown__options { display: block; }
-.sort-dropdown__option {
-    padding: 0.8rem 1.2rem;
-    border-radius: 0.8rem;
-    font-size: 1.4rem;
-    color: #374151;
-    cursor: pointer;
-}
-.sort-dropdown__option:hover { background: #f3f4f6; }
-
-/* SEARCH */
-.manager-search {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 2rem;
-    padding: 0.8rem 1.6rem;
-    background: #fff;
-    min-width: 24rem;
-}
-.manager-search__input {
-    width: 100%;
-    font-size: 1.4rem;
-    color: #374151;
-    border: none;
-    outline: none;
-    background: transparent;
-}
-.manager-search__input::placeholder { color: #9ca3af; }
-
-/* TABLE */
-.table-container { background: #fff; border-radius: 1.6rem; overflow: hidden; margin-bottom: 2rem; }
-.table { width: 100%; border-collapse: collapse; }
-.table__head { background: #f9fafb; }
-.table__header {
-    padding: 1.2rem 1.6rem;
-    text-align: left;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-}
-.table__row { border-top: 1px solid #f3f4f6; transition: background 0.1s; }
-.table__row:hover { background: #fafafa; }
-.table__cell {
-    padding: 1.4rem 1.6rem;
-    font-size: 1.4rem;
-    color: #374151;
-    vertical-align: middle;
-}
-.table__cell--action { width: 4rem; text-align: center; }
-.managers-link { color: var(--brand-blue); font-weight: 500; }
-.managers-link:hover { text-decoration: underline; }
-
-/* BROKER DENIAL REASON */
-.broker-denial-reason {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 1.3rem;
-    color: #6b7280;
-    max-width: 22rem;
+:root {
+  --blue: #005DAD;
+  --blue-link: #3d81ff;
+  --blue-title: #0062a8;
+  --gray-text: #939393;
+  --gray-light: #9ca3af;
+  --gray-body: #374151;
+  --gray-border: #f3f4f6;
+  --gray-bg: #f8f8f8;
+  --red: #e31f1f;
+  --green: #16a34a;
 }
 
-/* STATUS DROPDOWN */
-.status-dropdown { position: relative; display: inline-block; }
-.status-dropdown__selected {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 2rem;
-    font-size: 1.3rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: opacity 0.15s;
-}
-.status-dropdown--waiting .status-dropdown__selected { background: #f4f4f4; color: #828282; border-color: #f4f4f4; }
-.status-dropdown--approved .status-dropdown__selected { background: #e6f4e0; color: #16a34a; border-color: #e6f4e0; }
-.status-dropdown--denied .status-dropdown__selected { background: #fbebeb; color: #e31f1f; border-color: #fbebeb; }
-.status-dropdown__options {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    background: #fff;
-    border-radius: 1.2rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    padding: 0.6rem;
-    z-index: 20;
-    min-width: 14rem;
-}
-.status-dropdown.open .status-dropdown__options { display: block; }
-.status-dropdown__option {
-    padding: 0.8rem 1.2rem;
-    border-radius: 0.8rem;
-    font-size: 1.3rem;
-    color: #374151;
-    cursor: pointer;
-}
-.status-dropdown__option:hover { background: #f3f4f6; }
-
-/* EDIT BUTTON */
-.broker-edit-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 0.8rem;
-    transition: background 0.2s;
-}
-.broker-edit-btn:hover { background: #f3f4f6; }
-
-/* PAGINATION */
-.pagination { display: flex; align-items: center; gap: 0.4rem; }
-.pagination__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 3.6rem;
-    height: 3.6rem;
-    padding: 0 0.8rem;
-    font-size: 1.4rem;
-    background: #fff;
-    color: #374151;
-    border-radius: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid #e5e7eb;
-}
-.pagination__button:hover { background: #f3f4f6; }
-.pagination__button--active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); }
-.pagination__arrow { font-size: 1.8rem; color: #9ca3af; border-color: transparent; background: transparent; }
-.pagination__dots { color: #9ca3af; font-size: 1.4rem; padding: 0 0.4rem; user-select: none; }
-
-/* MODAL OVERLAY */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.4);
-    justify-content: flex-end;
-    align-items: stretch;
-}
-.modal-overlay.show { display: flex; }
-
-/* MODAL BROKER PANEL */
-.modal-broker {
-    width: 48rem;
-    max-width: 100vw;
-    height: 100vh;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: -4px 0 24px rgba(0,0,0,0.12);
-}
-
-/* MODAL HEADER */
-.modal__header {
-    padding: 2rem 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #f3f4f6;
-    flex-shrink: 0;
-}
-.modal__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.6rem;
-    height: 3.6rem;
-    border-radius: 0.8rem;
-    transition: background 0.2s;
-}
-.modal__close:hover { background: #f3f4f6; }
-
-/* SCREEN 2: DENIAL REASON MODAL */
-.modal-denial__title { font-size: 2.4rem; font-weight: 600; color: #111; }
-.modal-denial__body {
-    padding: 2.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    overflow-y: auto;
-    flex: 1;
-}
-.modal-denial__info-block { display: flex; flex-direction: column; gap: 0.8rem; }
-.modal-denial__info-row { display: flex; flex-direction: column; gap: 0.2rem; }
-.modal-denial__info-label { font-size: 1.4rem; color: #9ca3af; }
-.modal-denial__info-value { font-size: 1.8rem; color: #374151; font-weight: 500; }
-.modal-denial__old-reason { display: flex; flex-direction: column; gap: 0.6rem; }
-.modal-denial__old-reason-label { font-size: 1.4rem; color: #9ca3af; }
-.modal-denial__old-reason-text { font-size: 1.6rem; color: #374151; line-height: 1.4; }
-.modal-denial__field { display: flex; flex-direction: column; gap: 0.8rem; }
-.modal__field-name { font-size: 1.4rem; color: #9ca3af; }
-.ui-input-textarea {
-    min-height: 14rem;
-    resize: vertical;
-    border-radius: 1.2rem;
-    border: 1px solid #e5e7eb;
-    padding: 1.2rem 1.4rem;
-    font-size: 1.5rem;
-    line-height: 1.4;
-    color: #374151;
-    background: #fff;
-    transition: border-color 0.2s;
-    width: 100%;
-}
-.ui-input-textarea:focus { border-color: var(--brand-blue); }
-.ui-input-textarea::placeholder { color: #c4c9d4; }
-.modal__field-error { font-size: 1.2rem; color: #e31f1f; min-height: 1.6rem; }
-.broker-comment__status { font-size: 1.3rem; color: #939393; min-height: 1.8rem; }
-.modal-denial__footer {
-    padding: 1.6rem 2.4rem;
-    border-top: 1px solid #f3f4f6;
-    display: flex;
-    justify-content: flex-end;
-    background: #fff;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
-    flex-shrink: 0;
-}
-.dark-blue-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.2rem 3.2rem;
-    background: var(--brand-blue);
-    color: #fff;
-    border-radius: 10rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    border: none;
-    transition: opacity 0.2s;
-}
-.dark-blue-btn:hover { opacity: 0.88; }
-
-/* DEMO CONTROLS */
+/* ─── DEMO BAR ─────────────────────────────────────────────── */
 .demo-bar {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1e1e1e;
-    border-radius: 1.6rem;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    z-index: 9999;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: #1a1a2e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 0.9rem 2rem;
+  font-size: 1.3rem;
 }
-.demo-bar span { color: #9ca3af; font-size: 1.2rem; }
 .demo-btn {
-    padding: 0.6rem 1.4rem;
-    border-radius: 0.8rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: opacity 0.2s;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-radius: 0.6rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s;
+  font-family: inherit;
 }
-.demo-btn--1 { background: #4b5563; color: #fff; }
-.demo-btn--2 { background: #e31f1f; color: #fff; }
-.demo-btn--1.active { background: var(--brand-blue); }
-.demo-btn:hover { opacity: 0.8; }
+.demo-btn.active { background: #005dad; }
+.demo-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+
+/* ─── LAYOUT ────────────────────────────────────────────────── */
+.page {
+  display: flex;
+  min-height: 100vh;
+  background: #f8f8f8;
+  position: relative;
+}
+
+/* ─── SIDEBAR ───────────────────────────────────────────────── */
+.sidebar {
+  width: 320px;
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  padding-top: 3.6rem;
+  padding-bottom: 3.6rem;
+}
+
+/* Logo */
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0 3.2rem;
+  margin-bottom: 3.2rem;
+}
+.sidebar__logo-icon {
+  width: 4rem; height: 4rem;
+  background: var(--blue);
+  border-radius: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+.sidebar__logo-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+/* User */
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0 2.4rem;
+  margin-bottom: 2.4rem;
+}
+.sidebar__avatar {
+  width: 4.8rem; height: 4.8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #e5e7eb;
+}
+.sidebar__user-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.2;
+}
+.sidebar__user-role {
+  font-size: 1.3rem;
+  color: var(--gray-text);
+  margin-top: 0.2rem;
+}
+
+/* Divider line */
+.sidebar__sep {
+  margin: 0 2rem 2.4rem;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+/* Nav */
+.sidebar__nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0 1.6rem;
+}
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.1rem 1.6rem;
+  border-radius: 1.2rem;
+  font-size: 1.6rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.sidebar__nav-item:hover { background: #f5f7fa; }
+.sidebar__nav-item--active {
+  color: var(--blue);
+  font-weight: 600;
+  background: transparent;
+}
+.sidebar__nav-icon {
+  width: 2.6rem; height: 2.6rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.65;
+}
+.sidebar__nav-item--active .sidebar__nav-icon { opacity: 1; }
+
+/* Logout */
+.sidebar__logout {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.1rem 3.2rem;
+  font-size: 1.7rem;
+  color: var(--gray-text);
+  cursor: pointer;
+  margin-top: 1.6rem;
+}
+
+/* ─── MAIN ──────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.main__title-row {
+  padding: 3.2rem 4rem 0;
+}
+.main__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 4rem;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.main__title span { color: var(--blue); }
+
+/* ─── CONTROLS ──────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 4rem 2rem;
+}
+.controls__left { display: flex; align-items: center; gap: 1.4rem; }
+
+/* Filter tabs pill */
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10rem;
+  padding: 0.5rem 1.2rem;
+  height: 4.8rem;
+}
+.filter-tab {
+  display: flex; align-items: center;
+  padding: 0.6rem 1.4rem;
+  border-radius: 10rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  line-height: 1.3;
+}
+.filter-tab--active {
+  background: rgba(0, 93, 173, 0.10);
+  color: var(--blue);
+  font-weight: 500;
+}
+.filter-tab--inactive {
+  color: var(--gray-text);
+  opacity: 0.5;
+}
+.filter-tab--inactive:hover { opacity: 0.8; }
+
+/* Sort pill */
+.sort-pill {
+  display: flex; align-items: center; gap: 1rem;
+  background: #fff;
+  border-radius: 10rem;
+  padding: 1.1rem 1.4rem;
+  cursor: pointer;
+  white-space: nowrap;
+  height: 4.8rem;
+}
+.sort-pill__label { font-size: 1.5rem; color: var(--gray-text); }
+.sort-pill__value {
+  font-size: 1.5rem; color: var(--blue-link);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+
+/* Search */
+.search-box {
+  display: flex; align-items: center; gap: 1.2rem;
+  background: #fff;
+  border-radius: 2rem;
+  padding: 1.1rem 1.6rem;
+  width: 36rem;
+  height: 4.8rem;
+}
+.search-box input {
+  flex: 1; border: none; background: none;
+  font-size: 1.5rem; color: #374151; outline: none;
+}
+.search-box input::placeholder { color: var(--gray-text); }
+
+/* ─── TABLE ─────────────────────────────────────────────────── */
+.table-wrap { padding: 0 4rem; flex: 1; }
+
+.broker-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 1.6rem;
+  overflow: hidden;
+}
+
+.broker-table thead th {
+  padding: 1.2rem 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--gray-light);
+  text-align: left;
+  border-bottom: 1px solid var(--gray-border);
+  white-space: nowrap;
+}
+.broker-table thead th:first-child { padding-left: 2rem; }
+.broker-table thead th:last-child { padding-right: 2rem; }
+
+.broker-table tbody tr { transition: background 0.1s; }
+.broker-table tbody tr:hover { background: #fafafa; }
+.broker-table tbody td {
+  padding: 1.2rem 1.2rem;
+  font-size: 1.4rem;
+  color: #374151;
+  border-bottom: 1px solid var(--gray-border);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.broker-table tbody tr:last-child td { border-bottom: none; }
+.broker-table tbody td:first-child { padding-left: 2rem; }
+.broker-table tbody td:last-child { padding-right: 2rem; }
+
+/* ЖК link */
+.jk-cell {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: #1e71e6;
+  text-decoration: underline;
+  max-width: 17rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.jk-cell svg { flex-shrink: 0; }
+
+/* Status pills */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  height: 3.2rem;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+.status-pill--waiting { background: #f4f4f4; color: #828282; }
+.status-pill--approved { background: rgba(22,163,74,0.10); color: #16a34a; }
+.status-pill--denied { background: rgba(227,31,31,0.08); color: var(--red); }
+.status-pill svg { flex-shrink: 0; }
+
+/* Reason text */
+.reason-text {
+  font-size: 1.3rem;
+  color: var(--gray-light);
+  max-width: 22rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* Edit btn */
+.edit-btn {
+  width: 3.2rem; height: 3.2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: #9ca3af;
+}
+.edit-btn:hover { background: #f3f4f6; }
+
+/* ─── PAGINATION ────────────────────────────────────────────── */
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.4rem;
+  padding: 2rem 4rem;
+}
+.page-btn {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 2.8rem; height: 2.8rem;
+  padding: 0 0.6rem;
+  border-radius: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--blue);
+  transition: background 0.15s;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+.page-btn:hover:not(.page-btn--active):not(.page-btn--dots) { background: #eef4ff; }
+.page-btn--active { background: var(--blue); color: #fff; }
+.page-btn--dots { cursor: default; color: var(--blue); font-weight: 700; }
+.page-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.8rem; height: 2.8rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  color: var(--gray-light);
+  transition: background 0.15s;
+}
+.page-arrow:hover { background: #f3f4f6; }
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+.main__footer {
+  padding: 2rem 4rem;
+  font-size: 1.5rem;
+  color: var(--gray-text);
+  text-align: center;
+  padding-bottom: 5rem; /* space for demo bar */
+}
+
+/* ─── MODAL (SCREEN 2) ──────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-backdrop.show { display: flex; }
+
+.modal-card {
+  background: #fff;
+  border-radius: 2rem;
+  width: 53rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.modal-card__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 2.4rem 2.4rem 1.6rem;
+}
+.modal-card__title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #111;
+  font-family: 'DM Sans', sans-serif;
+}
+.modal-close {
+  width: 3.2rem; height: 3.2rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  border-radius: 50%;
+  font-size: 2.2rem;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.modal-close:hover { background: #f3f4f6; }
+
+.modal-card__body {
+  padding: 0 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-info { display: flex; flex-direction: column; gap: 0.4rem; }
+.modal-info__label { font-size: 1.4rem; color: var(--gray-light); }
+.modal-info__value {
+  font-size: 1.8rem;
+  color: #374151;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.modal-sep { height: 1px; background: #f3f4f6; }
+
+.modal-old-reason { display: flex; flex-direction: column; gap: 0.6rem; }
+.modal-old-reason__label { font-size: 1.4rem; color: var(--gray-light); }
+.modal-old-reason__text {
+  font-size: 1.6rem; color: #374151;
+  line-height: 1.45;
+}
+
+.modal-field { display: flex; flex-direction: column; gap: 0.8rem; }
+.modal-field__label { font-size: 1.4rem; color: #374151; }
+.modal-textarea {
+  border: 1px solid #ccc;
+  border-radius: 1.2rem;
+  padding: 1.2rem 1.4rem;
+  font-size: 1.6rem;
+  min-height: 12rem;
+  resize: vertical;
+  outline: none;
+  line-height: 1.4;
+  transition: border-color 0.15s;
+  font-family: 'Inter', sans-serif;
+  color: #374151;
+}
+.modal-textarea::placeholder { color: #ccc; }
+.modal-textarea:focus { border-color: var(--blue); }
+
+.modal-card__footer {
+  padding: 1.6rem 2.4rem;
+  border-top: 1px solid #f3f4f6;
+  display: flex; justify-content: flex-end;
+  margin-top: 1.6rem;
+}
+
+.btn-save {
+  background: var(--blue);
+  color: #fff;
+  border-radius: 10rem;
+  padding: 1.4rem 3.6rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-save:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
 
-<div class="page__body">
-    <!-- SIDEBAR -->
-    <aside class="account-menu">
-        <div class="account-menu__top">
-            <a class="account-menu__logo-placeholder" href="#">
-                <div class="account-menu__logo-icon">CG</div>
-                CAPITAL GROUP
-            </a>
-
-            <div class="account-menu__user">
-                <div class="account-menu__user-avatar">КК</div>
-                <div>
-                    <div class="account-menu__user-name">Константин Кузнецов</div>
-                    <div class="account-menu__user-company">Менеджер</div>
-                </div>
-            </div>
-
-            <nav class="account-menu__links">
-                <a href="#" class="account-menu__link active-link">
-                    <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                        <path d="M20 13C20 15.761 17.761 18 15 18C12.239 18 10 15.761 10 13C10 10.239 12.239 8 15 8C17.761 8 20 10.239 20 13Z" fill="#1B3F7B"/>
-                        <path d="M6 25C6 21.134 10.029 18 15 18C19.971 18 24 21.134 24 25" stroke="#1B3F7B" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="account-menu__link-text">Брокеры</span>
-                </a>
-                <a href="#" class="account-menu__link">
-                    <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                        <path d="M21 12C21 15.314 18.314 18 15 18C11.686 18 9 15.314 9 12C9 8.686 11.686 6 15 6C18.314 6 21 8.686 21 12Z" fill="#828282"/>
-                        <path d="M5 26C5 21.582 9.477 18 15 18C20.523 18 25 21.582 25 26" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="account-menu__link-text">Клиенты</span>
-                </a>
-                <a href="#" class="account-menu__link">
-                    <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                        <rect x="6" y="4" width="18" height="22" rx="2" stroke="#828282" stroke-width="2"/>
-                        <path d="M10 10H20M10 15H20M10 20H16" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="account-menu__link-text">Заявки</span>
-                </a>
-                <a href="#" class="account-menu__link">
-                    <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                        <path d="M15 4L28 10V11L15 17L2 11V10L15 4Z" stroke="#828282" stroke-width="2" stroke-linejoin="round"/>
-                        <path d="M7 14V21C7 21 10 24 15 24C20 24 23 21 23 21V14" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="account-menu__link-text">Заявки на обучение</span>
-                </a>
-                <a href="#" class="account-menu__link">
-                    <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                        <path d="M4 8H26V24H4V8Z" stroke="#828282" stroke-width="2"/>
-                        <path d="M4 13H26" stroke="#828282" stroke-width="2"/>
-                        <path d="M10 8V6M20 8V6" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="account-menu__link-text">Заявки на продажу</span>
-                </a>
-            </nav>
-        </div>
-
-        <div class="account-menu__bottom">
-            <div class="account-menu__separator"></div>
-            <a href="#" class="account-menu__link">
-                <svg class="account-menu__link-img" viewBox="0 0 30 30" fill="none">
-                    <path d="M11 5H5V25H11" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M20 10L25 15L20 20" stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M25 15H13" stroke="#828282" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <span class="account-menu__link-text">Выйти из профиля</span>
-            </a>
-        </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="account-part manager-page">
-        <div class="manager-page__inner">
-
-            <h1 class="manager-page__title">Брокеры <span class="manager-page__count">(32)</span></h1>
-
-            <div class="manager-controls">
-                <div class="manager-controls__filters">
-                    <button class="filter-tab filter-tab--active" onclick="setFilter(this)">Все</button>
-                    <button class="filter-tab" onclick="setFilter(this)">Ожидает</button>
-                    <button class="filter-tab" onclick="setFilter(this)">Согласовано</button>
-                    <button class="filter-tab" onclick="setFilter(this)">Отказано</button>
-                </div>
-                <div class="manager-controls__right">
-                    <div class="sort-dropdown" id="sortDropdown">
-                        <div class="sort-dropdown__selected" onclick="toggleSort()">
-                            <span class="sort__label">Сортировать:</span>
-                            <span class="sort__value">По алфавиту</span>
-                            <svg class="sort__arrow" width="12" height="8" viewBox="0 0 12 8" fill="none">
-                                <path d="M1 1L6 6L11 1" stroke="#939393" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="sort-dropdown__options">
-                            <div class="sort-dropdown__option" onclick="selectSort(this,'По алфавиту')">По алфавиту</div>
-                            <div class="sort-dropdown__option" onclick="selectSort(this,'По дате (новые)')">По дате (новые)</div>
-                            <div class="sort-dropdown__option" onclick="selectSort(this,'По дате (старые)')">По дате (старые)</div>
-                        </div>
-                    </div>
-                    <div class="manager-search">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <circle cx="7" cy="7" r="5.5" stroke="#939393" stroke-width="1.5"/>
-                            <path d="M11 11L14 14" stroke="#939393" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                        <input class="manager-search__input" type="text" placeholder="Поиск по базе брокеров">
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <table class="table">
-                    <thead class="table__head">
-                        <tr>
-                            <th class="table__header">ID Брокера</th>
-                            <th class="table__header">Дата добавления</th>
-                            <th class="table__header">Организация / Брокер</th>
-                            <th class="table__header">Телефон</th>
-                            <th class="table__header">ЖК</th>
-                            <th class="table__header">Статус заявки</th>
-                            <th class="table__header">Причина отказа</th>
-                            <th class="table__header"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table__row">
-                            <td class="table__cell">2345</td>
-                            <td class="table__cell">17.11.25</td>
-                            <td class="table__cell"><a href="#" class="managers-link">ООО «Брокер Плюс»</a></td>
-                            <td class="table__cell">8 918 209 11 03</td>
-                            <td class="table__cell"><a href="#" class="managers-link">Мастерс, Викторенко...</a></td>
-                            <td class="table__cell">
-                                <div class="status-dropdown status-dropdown--waiting" onclick="toggleStatus(this)">
-                                    <div class="status-dropdown__selected">Ожидает</div>
-                                    <div class="status-dropdown__options">
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'waiting','Ожидает')">Ожидает</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'approved','Согласовано')">Согласовано</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'denied','Отказано')">Отказано</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="table__cell"><span class="broker-denial-reason">—</span></td>
-                            <td class="table__cell table__cell--action">
-                                <button class="btn-reset broker-edit-btn" onclick="openDenialModal('2345','ООО «Брокер Плюс»','Викторенко Константин Алексеевич','')">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13L13 2L16 5L5 16H2V13Z" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="table__row">
-                            <td class="table__cell">2344</td>
-                            <td class="table__cell">18.11.25</td>
-                            <td class="table__cell"><a href="#" class="managers-link">ИП Смирнов А.В.</a></td>
-                            <td class="table__cell">8 916 440 22 11</td>
-                            <td class="table__cell"><a href="#" class="managers-link">Зелёный бульвар</a></td>
-                            <td class="table__cell">
-                                <div class="status-dropdown status-dropdown--approved" onclick="toggleStatus(this)">
-                                    <div class="status-dropdown__selected">Согласовано</div>
-                                    <div class="status-dropdown__options">
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'waiting','Ожидает')">Ожидает</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'approved','Согласовано')">Согласовано</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'denied','Отказано')">Отказано</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="table__cell"></td>
-                            <td class="table__cell table__cell--action">
-                                <button class="btn-reset broker-edit-btn" onclick="openDenialModal('2344','ИП Смирнов А.В.','Смирнов Алексей Викторович','')">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13L13 2L16 5L5 16H2V13Z" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="table__row">
-                            <td class="table__cell">2343</td>
-                            <td class="table__cell">15.11.25</td>
-                            <td class="table__cell"><a href="#" class="managers-link">ООО «Недвижимость+»</a></td>
-                            <td class="table__cell">8 903 512 78 90</td>
-                            <td class="table__cell"><a href="#" class="managers-link">Мастерс</a></td>
-                            <td class="table__cell">
-                                <div class="status-dropdown status-dropdown--denied" onclick="toggleStatus(this)">
-                                    <div class="status-dropdown__selected">Отказано</div>
-                                    <div class="status-dropdown__options">
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'waiting','Ожидает')">Ожидает</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'approved','Согласовано')">Согласовано</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'denied','Отказано')">Отказано</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="table__cell"><span class="broker-denial-reason">Не предоставлены документы об аккредитации</span></td>
-                            <td class="table__cell table__cell--action">
-                                <button class="btn-reset broker-edit-btn" onclick="openDenialModal('2343','ООО «Недвижимость+»','Петров Игорь Михайлович','Не предоставлены документы об аккредитации')">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13L13 2L16 5L5 16H2V13Z" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="table__row">
-                            <td class="table__cell">2342</td>
-                            <td class="table__cell">12.11.25</td>
-                            <td class="table__cell"><a href="#" class="managers-link">ООО «Простор»</a></td>
-                            <td class="table__cell">8 926 771 34 56</td>
-                            <td class="table__cell"><a href="#" class="managers-link">Викторенко, Мастерс</a></td>
-                            <td class="table__cell">
-                                <div class="status-dropdown status-dropdown--waiting" onclick="toggleStatus(this)">
-                                    <div class="status-dropdown__selected">Ожидает</div>
-                                    <div class="status-dropdown__options">
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'waiting','Ожидает')">Ожидает</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'approved','Согласовано')">Согласовано</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'denied','Отказано')">Отказано</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="table__cell"></td>
-                            <td class="table__cell table__cell--action">
-                                <button class="btn-reset broker-edit-btn" onclick="openDenialModal('2342','ООО «Простор»','Краснов Дмитрий Сергеевич','')">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13L13 2L16 5L5 16H2V13Z" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="table__row">
-                            <td class="table__cell">2341</td>
-                            <td class="table__cell">10.11.25</td>
-                            <td class="table__cell"><a href="#" class="managers-link">ИП Васильева Е.Н.</a></td>
-                            <td class="table__cell">8 915 390 01 23</td>
-                            <td class="table__cell"><a href="#" class="managers-link">Зелёный бульвар</a></td>
-                            <td class="table__cell">
-                                <div class="status-dropdown status-dropdown--denied" onclick="toggleStatus(this)">
-                                    <div class="status-dropdown__selected">Отказано</div>
-                                    <div class="status-dropdown__options">
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'waiting','Ожидает')">Ожидает</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'approved','Согласовано')">Согласовано</div>
-                                        <div class="status-dropdown__option" onclick="setStatus(event,this,'denied','Отказано')">Отказано</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="table__cell"><span class="broker-denial-reason">Истёк срок действия лицензии</span></td>
-                            <td class="table__cell table__cell--action">
-                                <button class="btn-reset broker-edit-btn" onclick="openDenialModal('2341','ИП Васильева Е.Н.','Васильева Елена Николаевна','Истёк срок действия лицензии')">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 13L13 2L16 5L5 16H2V13Z" stroke="#828282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <nav class="pagination">
-                <button class="btn-reset pagination__button pagination__arrow">‹</button>
-                <button class="btn-reset pagination__button">1</button>
-                <button class="btn-reset pagination__button">2</button>
-                <button class="btn-reset pagination__button">3</button>
-                <button class="btn-reset pagination__button pagination__button--active">4</button>
-                <button class="btn-reset pagination__button">5</button>
-                <span class="pagination__dots">...</span>
-                <button class="btn-reset pagination__button">24</button>
-                <button class="btn-reset pagination__button pagination__arrow">›</button>
-            </nav>
-
-        </div>
-    </main>
-</div>
-
-
-<!-- SCREEN 2: DENIAL REASON MODAL -->
-<div class="modal-overlay" id="denial-modal" onclick="closeDenialIfOverlay(event)">
-    <div class="modal-broker">
-        <div class="modal__header">
-            <h2 class="modal-denial__title">Причина отказа</h2>
-            <button class="btn-reset modal__close" onclick="closeDenialModal()">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                    <path d="M6 6L20 20M20 6L6 20" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </button>
-        </div>
-        <div class="modal-denial__body">
-            <div class="modal-denial__info-block">
-                <div class="modal-denial__info-row">
-                    <span class="modal-denial__info-label">Брокер:</span>
-                    <span class="modal-denial__info-value" id="denial-org">—</span>
-                </div>
-                <div class="modal-denial__info-row">
-                    <span class="modal-denial__info-label">ФИО:</span>
-                    <span class="modal-denial__info-value" id="denial-fio">—</span>
-                </div>
-            </div>
-            <div class="modal-denial__old-reason">
-                <div class="modal-denial__old-reason-label">Текущая причина отказа:</div>
-                <div class="modal-denial__old-reason-text" id="denial-old-reason">—</div>
-            </div>
-            <div class="modal-denial__field">
-                <div class="modal__field-name">Новая причина отказа</div>
-                <textarea class="ui-input-textarea" id="denial-input" placeholder="Введите текст причины отказа" rows="5"></textarea>
-                <div class="modal__field-error" id="denial-error"></div>
-            </div>
-            <div class="broker-comment__status" id="denial-status"></div>
-        </div>
-        <div class="modal-denial__footer">
-            <button class="dark-blue-btn" onclick="saveDenial()">Сохранить</button>
-        </div>
-    </div>
-</div>
-
 <!-- DEMO BAR -->
 <div class="demo-bar">
-    <span>Экран:</span>
-    <button class="demo-btn demo-btn--1 active" onclick="showScreen(1)">1 — Список брокеров</button>
-    <button class="demo-btn demo-btn--2" onclick="showScreen(2)">2 — Модал «Причина отказа»</button>
+  <span style="color:#aaa">Демо ▸</span>
+  <button class="demo-btn active" onclick="switchScreen(1, this)">Экран 1 — Список брокеров</button>
+  <button class="demo-btn" onclick="switchScreen(2, this)">Экран 2 — Модал «Причина отказа»</button>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- ══ SIDEBAR ══════════════════════════════════════════════ -->
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">CG</div>
+      <div class="sidebar__logo-text">CAPITAL<br>GROUP</div>
+    </div>
+
+    <!-- User -->
+    <div class="sidebar__user">
+      <img class="sidebar__avatar"
+           src="https://i.pravatar.cc/96?img=11"
+           alt="Аватар">
+      <div>
+        <div class="sidebar__user-name">Константин Кузнецов</div>
+        <div class="sidebar__user-role">Менеджер</div>
+      </div>
+    </div>
+
+    <div class="sidebar__sep"></div>
+
+    <!-- Nav -->
+    <nav class="sidebar__nav">
+
+      <!-- Брокеры — active -->
+      <div class="sidebar__nav-item sidebar__nav-item--active">
+        <div class="sidebar__nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#005DAD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+            <path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        Брокеры
+      </div>
+
+      <!-- Клиенты -->
+      <div class="sidebar__nav-item">
+        <div class="sidebar__nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        Клиенты
+      </div>
+
+      <!-- Заявки -->
+      <div class="sidebar__nav-item">
+        <div class="sidebar__nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        Заявки
+      </div>
+
+      <!-- Заявки на обучение -->
+      <div class="sidebar__nav-item">
+        <div class="sidebar__nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+          </svg>
+        </div>
+        Заявки на обучение
+      </div>
+
+      <!-- Заявки на продажу -->
+      <div class="sidebar__nav-item">
+        <div class="sidebar__nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 9 12 2 21 9"/>
+            <path d="M9 22V12h6v10"/>
+            <path d="M3 9v13h18V9"/>
+          </svg>
+        </div>
+        Заявки на продажу
+      </div>
+
+    </nav>
+
+    <!-- Logout -->
+    <div class="sidebar__logout">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#939393" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-90deg)">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Выйти из профиля
+    </div>
+
+  </aside>
+
+  <!-- ══ MAIN ════════════════════════════════════════════════= -->
+  <main class="main">
+
+    <!-- Title -->
+    <div class="main__title-row">
+      <h1 class="main__title">Брокеры <span style="color:#005dad">(32)</span></h1>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="controls__left">
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs">
+          <div class="filter-tab filter-tab--active">Все</div>
+          <div class="filter-tab filter-tab--inactive">Ожидает</div>
+          <div class="filter-tab filter-tab--inactive">Согласовано</div>
+          <div class="filter-tab filter-tab--inactive">Отказано</div>
+        </div>
+
+        <!-- Sort -->
+        <div class="sort-pill">
+          <span class="sort-pill__label">Сортировать:</span>
+          <span class="sort-pill__value">
+            По алфавиту
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Search -->
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#939393" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Поиск по базе заявок">
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table class="broker-table">
+        <thead>
+          <tr>
+            <th>ID Брокера</th>
+            <th>Дата добавления</th>
+            <th>Организация/Брокер</th>
+            <th>Телефон</th>
+            <th>ЖК</th>
+            <th>Статус заявки</th>
+            <th>Причина для отказа</th>
+            <th style="width:5rem"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td>2345</td>
+            <td>17.11.25</td>
+            <td>ООО "Брокер Плюс"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--waiting">
+                Ожидает
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td><div class="reason-text">Причина отказа проста лалалалаллалалалал лалалалалалалала лалалал</div></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2344</td>
+            <td>18.11.25</td>
+            <td>ООО "Брокер Плюс"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--approved">
+                Согласовано
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2343</td>
+            <td>15.11.25</td>
+            <td>ООО "Брокер"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--denied">
+                Отказано
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e31f1f" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2342</td>
+            <td>14.11.25</td>
+            <td>ООО "Брокер Плюс"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--approved">
+                Согласовано
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td><div class="reason-text">Причина отказа проста лалалалаллалалалал лалалалалалалала</div></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2341</td>
+            <td>13.11.25</td>
+            <td>ООО "Брокер Плюс"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Бадаевский, Викто…
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--waiting">
+                Ожидает
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2340</td>
+            <td>12.11.25</td>
+            <td>ООО "Брокер"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--waiting">
+                Ожидает
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#828282" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td><div class="reason-text">Причина отказа проста лалалалала…</div></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2339</td>
+            <td>11.11.25</td>
+            <td>ООО "Брокер Плюс"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Виктор…
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--approved">
+                Согласовано
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+          <tr>
+            <td>2338</td>
+            <td>10.11.25</td>
+            <td>ООО "Брокер"</td>
+            <td>8 918 209 11 03</td>
+            <td>
+              <div class="jk-cell">
+                Мастерс, Викторенко
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d81ff" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </td>
+            <td>
+              <button class="status-pill status-pill--approved">
+                Согласовано
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </td>
+            <td><div class="reason-text">Причина отказа проста лалалаллала…</div></td>
+            <td><div class="edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <div class="page-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="page-btn">1</div>
+      <div class="page-btn">2</div>
+      <div class="page-btn">3</div>
+      <div class="page-btn page-btn--active">4</div>
+      <div class="page-btn">5</div>
+      <div class="page-btn">10</div>
+      <div class="page-btn page-btn--dots">…</div>
+      <div class="page-btn">24</div>
+      <div class="page-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="main__footer">© Capital Group, 2025. Личный кабинет менеджера</div>
+
+  </main>
+
+</div>
+
+<!-- ══ MODAL — Screen 2 ═══════════════════════════════════════ -->
+<div class="modal-backdrop" id="modalS2">
+  <div class="modal-card">
+
+    <div class="modal-card__header">
+      <h2 class="modal-card__title">Причина отказа</h2>
+      <div class="modal-close" onclick="closeModal()">×</div>
+    </div>
+
+    <div class="modal-card__body">
+      <div class="modal-info">
+        <div class="modal-info__label">Брокер:</div>
+        <div class="modal-info__value">ООО «Название Организации»</div>
+      </div>
+      <div class="modal-info">
+        <div class="modal-info__label">ФИО:</div>
+        <div class="modal-info__value">Фамилия Имя Отчество</div>
+      </div>
+      <div class="modal-sep"></div>
+      <div class="modal-old-reason">
+        <div class="modal-old-reason__label">Старая причина отказа:</div>
+        <div class="modal-old-reason__text">Тут написана старая причина отказа по такой-то такой-то причине</div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-field__label">Введите причину отказа</div>
+        <textarea class="modal-textarea" placeholder="Введите текст"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-card__footer">
+      <button class="btn-save">Сохранить</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
-function setFilter(btn) {
-    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('filter-tab--active'));
-    btn.classList.add('filter-tab--active');
+function switchScreen(n, btn) {
+  document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (n === 2) {
+    document.getElementById('modalS2').classList.add('show');
+  } else {
+    document.getElementById('modalS2').classList.remove('show');
+  }
 }
-function toggleSort() {
-    document.getElementById('sortDropdown').classList.toggle('open');
+function closeModal() {
+  document.getElementById('modalS2').classList.remove('show');
+  document.querySelectorAll('.demo-btn').forEach((b,i) => { if(i===0) b.classList.add('active'); else b.classList.remove('active'); });
 }
-function selectSort(el, label) {
-    document.querySelector('.sort__value').textContent = label;
-    document.getElementById('sortDropdown').classList.remove('open');
-}
-function toggleStatus(dropdown) {
-    document.querySelectorAll('.status-dropdown').forEach(d => { if(d !== dropdown) d.classList.remove('open'); });
-    dropdown.classList.toggle('open');
-}
-function setStatus(e, opt, val, label) {
-    e.stopPropagation();
-    const dropdown = opt.closest('.status-dropdown');
-    dropdown.querySelector('.status-dropdown__selected').textContent = label;
-    dropdown.className = 'status-dropdown status-dropdown--' + val;
-    dropdown.classList.remove('open');
-}
-function openDenialModal(id, org, fio, reason) {
-    document.getElementById('denial-org').textContent = org;
-    document.getElementById('denial-fio').textContent = fio;
-    document.getElementById('denial-old-reason').textContent = reason || '—';
-    document.getElementById('denial-input').value = '';
-    document.getElementById('denial-error').textContent = '';
-    document.getElementById('denial-status').textContent = '';
-    document.getElementById('denial-modal').classList.add('show');
-    updateDemoBtns(2);
-}
-function closeDenialModal() {
-    document.getElementById('denial-modal').classList.remove('show');
-    updateDemoBtns(1);
-}
-function closeDenialIfOverlay(e) {
-    if (e.target === document.getElementById('denial-modal')) closeDenialModal();
-}
-function saveDenial() {
-    const val = document.getElementById('denial-input').value.trim();
-    if (!val) {
-        document.getElementById('denial-error').textContent = 'Введите причину отказа';
-        return;
-    }
-    document.getElementById('denial-error').textContent = '';
-    document.getElementById('denial-status').textContent = '✓ Сохранено';
-    setTimeout(() => closeDenialModal(), 800);
-}
-function showScreen(n) {
-    if (n === 2) openDenialModal('2343','ООО «Недвижимость+»','Петров Игорь Михайлович','Не предоставлены документы об аккредитации');
-    else closeDenialModal();
-}
-function updateDemoBtns(active) {
-    document.querySelectorAll('.demo-btn').forEach((b,i) => b.classList.toggle('active', i+1 === active));
-}
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.sort-dropdown')) document.getElementById('sortDropdown').classList.remove('open');
-    if (!e.target.closest('.status-dropdown')) document.querySelectorAll('.status-dropdown').forEach(d => d.classList.remove('open'));
+document.getElementById('modalS2').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
 });
 </script>
 </body>
