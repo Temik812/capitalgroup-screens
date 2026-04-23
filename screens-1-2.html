@@ -93,38 +93,42 @@ input, textarea { font-family: inherit; }
   margin-bottom: 3.2rem;
 }
 .sidebar__logo-icon {
-  width: 4rem; height: 4rem;
-  background: var(--blue);
-  border-radius: 0.8rem;
+  width: 4.2rem; height: 4.2rem;
+  background: transparent;
+  border: 2px solid var(--blue);
+  border-radius: 0.5rem;
   display: flex; align-items: center; justify-content: center;
-  color: #fff;
-  font-size: 1.3rem;
+  color: var(--blue);
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   flex-shrink: 0;
   font-family: 'DM Sans', sans-serif;
 }
 .sidebar__logo-text {
-  font-size: 1.4rem;
+  font-size: 1.9rem;
   font-weight: 700;
   color: var(--blue);
   letter-spacing: 0.06em;
-  line-height: 1.15;
+  line-height: 1;
   font-family: 'DM Sans', sans-serif;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-/* User */
+/* User card */
 .sidebar__user {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  padding: 0 2.4rem;
-  margin-bottom: 2.4rem;
+  gap: 1.4rem;
+  margin: 0 1.6rem 2.4rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(0, 93, 173, 0.2);
+  border-radius: 1.6rem;
 }
 .sidebar__avatar {
-  width: 4.8rem; height: 4.8rem;
-  border-radius: 50%;
+  width: 5.6rem; height: 5.6rem;
+  border-radius: 1rem;
   object-fit: cover;
   flex-shrink: 0;
   background: #e5e7eb;
@@ -132,13 +136,13 @@ input, textarea { font-family: inherit; }
 .sidebar__user-name {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111;
+  color: var(--blue);
   line-height: 1.2;
 }
 .sidebar__user-role {
   font-size: 1.3rem;
   color: var(--gray-text);
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 /* Divider line */
@@ -209,7 +213,7 @@ input, textarea { font-family: inherit; }
 .main__title {
   font-family: 'DM Sans', sans-serif;
   font-size: 4rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--blue);
   letter-spacing: -0.01em;
   line-height: 1;
@@ -551,13 +555,13 @@ input, textarea { font-family: inherit; }
     <!-- Logo -->
     <div class="sidebar__logo">
       <div class="sidebar__logo-icon">CG</div>
-      <div class="sidebar__logo-text">CAPITAL<br>GROUP</div>
+      <div class="sidebar__logo-text">CAPITAL GROUP</div>
     </div>
 
     <!-- User -->
     <div class="sidebar__user">
       <img class="sidebar__avatar"
-           src="https://i.pravatar.cc/96?img=11"
+           src="https://www.figma.com/api/mcp/asset/cf51389e-cc74-4fff-8bd0-ea23aebc3623"
            alt="Аватар">
       <div>
         <div class="sidebar__user-name">Константин Кузнецов</div>
