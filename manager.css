@@ -1,0 +1,462 @@
+/*
+ * manager.css — дополнительные стили для страниц менеджерского кабинета
+ * Подключать ПОСЛЕ основного template CSS
+ *
+ * Экраны: 1 (список брокеров), 2 (модал причины отказа),
+ *         3-5 (панель статуса регистрации)
+ */
+
+
+/* ===================================================================
+   ОБЩИЙ LAYOUT МЕНЕДЖЕРСКОЙ СТРАНИЦЫ
+   =================================================================== */
+
+.manager-page {
+    flex: 1;
+    padding: 4rem 4.8rem 6rem;
+    background: #f8f8f8;
+    min-height: 100vh;
+}
+
+.manager-page__inner {
+    max-width: 1600px;
+}
+
+.manager-page__title {
+    font-family: var(--font-family);
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 2.4rem;
+}
+
+.manager-page__count {
+    color: #111;
+}
+
+
+/* ===================================================================
+   CONTROLS BAR (фильтры + сортировка + поиск)
+   =================================================================== */
+
+.manager-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    background: #fff;
+    border-radius: 2.4rem;
+    padding: 0.6rem 1.6rem;
+}
+
+.manager-controls__filters {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.manager-controls__right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+
+/* ===================================================================
+   ПОИСК
+   =================================================================== */
+
+.manager-search {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 2rem;
+    padding: 0.8rem 1.6rem;
+    background: #fff;
+    min-width: 22rem;
+}
+
+.manager-search__icon {
+    flex-shrink: 0;
+}
+
+.manager-search__input {
+    width: 100%;
+    font-family: var(--font-family);
+    font-size: 1.4rem;
+    color: #374151;
+}
+
+.manager-search__input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* ===================================================================
+   ТАБЛИЦА БРОКЕРОВ
+   =================================================================== */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table__cell--action {
+    width: 4rem;
+    text-align: center;
+}
+
+.broker-denial-reason {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.3rem;
+    color: #6b7280;
+    max-width: 22rem;
+}
+
+/* Кнопка редактирования строки */
+.broker-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 0.8rem;
+    transition: background 0.2s;
+}
+
+.broker-edit-btn:hover {
+    background: #f3f4f6;
+}
+
+/* Status dropdown — цвета */
+.status-dropdown--waiting .status-dropdown__selected {
+    background: #f4f4f4;
+    color: #828282;
+    border: 1px solid #f4f4f4;
+}
+
+.status-dropdown--approved .status-dropdown__selected {
+    background: #e6f4e0;
+    color: #16a34a;
+    border: 1px solid #e6f4e0;
+}
+
+.status-dropdown--denied .status-dropdown__selected {
+    background: #fbebeb;
+    color: #e31f1f;
+    border: 1px solid #fbebeb;
+}
+
+.status-dropdown__options {
+    z-index: 20;
+}
+
+.pagination__button {
+    font-family: var(--font-family);
+    font-size: 1.4rem;
+    background: #fff;
+    color: #374151;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 4rem;
+    text-align: center;
+}
+
+.pagination__button:hover {
+    background: #f3f4f6;
+}
+
+.pagination__button--active {
+    background: var(--brand-blue);
+    color: #fff;
+    border-color: var(--brand-blue);
+}
+
+.pagination__arrow {
+    font-size: 1.8rem;
+    color: #9ca3af;
+    border-color: transparent;
+    background: transparent;
+}
+
+.pagination__dots {
+    color: #9ca3af;
+    font-size: 1.4rem;
+    padding: 0 0.4rem;
+    user-select: none;
+}
+
+
+/* ===================================================================
+   ЭКРАН 2 — МОДАЛ «ПРИЧИНА ОТКАЗА» (менеджерская сторона)
+   Использует .modal-overlay + .modal-broker (уже есть в template.css)
+   =================================================================== */
+
+.modal-denial__title {
+    font-family: var(--font-family);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+}
+
+.modal-denial__body {
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-denial__info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.modal-denial__info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.modal-denial__info-label {
+    font-size: 1.4rem;
+    color: #9ca3af;
+    font-family: var(--font-family);
+}
+
+.modal-denial__info-value {
+    font-size: 1.8rem;
+    color: #374151;
+    font-family: var(--font-family);
+    font-weight: 500;
+}
+
+.modal-denial__old-reason {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.modal-denial__old-reason-label {
+    font-size: 1.4rem;
+    color: #9ca3af;
+    font-family: var(--font-family);
+}
+
+.modal-denial__old-reason-text {
+    font-size: 1.6rem;
+    color: #374151;
+    font-family: var(--font-family);
+    line-height: 1.4;
+}
+
+.modal-denial__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.modal-denial__footer {
+    padding: 1.6rem 2.4rem;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: flex-end;
+    background: #fff;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+}
+
+
+/* ===================================================================
+   ЭКРАНЫ 3–5 — ПАНЕЛЬ «СТАТУС РЕГИСТРАЦИИ» (denied-appeal)
+   =================================================================== */
+
+/* Заголовок */
+.denied-appeal__title {
+    font-family: var(--font-family);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--brand-blue);
+    margin: 0;
+}
+
+/* Уведомление (красное/зелёное) */
+.denied-appeal__alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.2rem 1.6rem;
+    border-radius: 1.6rem;
+}
+
+.denied-appeal__alert--error {
+    background: rgba(227, 31, 31, 0.05);
+}
+
+.denied-appeal__alert--success {
+    background: rgba(84, 153, 59, 0.10);
+}
+
+.denied-appeal__alert-icon {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.denied-appeal__alert-text {
+    font-family: var(--font-family);
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #e31f1f;
+    margin: 0;
+}
+
+.denied-appeal__alert-text--success {
+    color: #54993b;
+}
+
+/* Причина */
+.denied-appeal__reason {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.denied-appeal__reason-label {
+    font-size: 1.6rem;
+    color: #9ca3af;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+.denied-appeal__reason-text {
+    font-size: 1.6rem;
+    color: #4b5563;
+    line-height: 1.35;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+/* Разделитель */
+.denied-appeal__divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 0;
+}
+
+/* Текст-приглашение */
+.denied-appeal__prompt {
+    font-family: var(--font-family);
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--brand-blue);
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* Поле textarea */
+.denied-appeal__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.denied-appeal__textarea {
+    min-height: 13rem;
+    resize: vertical;
+    border-radius: 1.2rem;
+    border: 1px solid #ccc;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    line-height: 1.3;
+}
+
+.denied-appeal__status {
+    font-size: 1.3rem;
+    color: #939393;
+    min-height: 1.8rem;
+}
+
+/* Секции — показываем нужную через data-state */
+.denied-appeal__denied-section,
+.denied-appeal__sent-section {
+    display: none;
+}
+
+.js-denied-appeal-panel[data-state="denied-empty"] .denied-appeal__denied-section,
+.js-denied-appeal-panel[data-state="denied-filled"] .denied-appeal__denied-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.js-denied-appeal-panel[data-state="appeal-sent"] .denied-appeal__sent-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Кнопка — отключена при denied-empty, активна при denied-filled, скрыта при appeal-sent */
+.denied-appeal__btn {
+    min-width: 24rem;
+}
+
+.js-denied-appeal-panel[data-state="denied-empty"] .denied-appeal__btn {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.js-denied-appeal-panel[data-state="appeal-sent"] .denied-appeal__footer {
+    display: none;
+}
+
+/* Текст подтверждения (состояние appeal-sent) */
+.denied-appeal__sent-text {
+    font-size: 1.6rem;
+    color: #4b5563;
+    line-height: 1.35;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+.denied-appeal__sent-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.denied-appeal__sent-comment-text {
+    font-size: 1.6rem;
+    color: #4b5563;
+    line-height: 1.35;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+/* Нижняя кнопочная панель */
+.denied-appeal__footer {
+    padding: 1.6rem 2.4rem;
+    display: flex;
+    justify-content: flex-end;
+    background: #fff;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 0;
+}
+
+
+/* ===================================================================
+   ВСПОМОГАТЕЛЬНЫЕ — [hidden] поддержка
+   =================================================================== */
+
+[hidden] {
+    display: none !important;
+}

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Экраны 3–5 — Capital Group</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 10px; }
+body { font-family: 'Inter', 'SF Pro Display', -apple-system, Arial, sans-serif; font-size: 1.4rem; color: #111; }
+:root { --brand-blue: #1B3F7B; --font-family: 'Inter', Arial, sans-serif; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+textarea { font-family: inherit; }
+.btn-reset { border: none; background: none; padding: 0; cursor: pointer; font-family: inherit; }
+
+/* FAKE PAGE BACKGROUND */
+.fake-page {
+    min-height: 100vh;
+    background: #f5f6f8;
+    display: flex;
+    align-items: flex-start;
+}
+.fake-page__inner {
+    width: 100%;
+    max-width: 900px;
+    padding: 6rem 5rem;
+}
+.fake-page__title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 3.2rem;
+}
+.fake-page__section {
+    background: #fff;
+    border-radius: 2rem;
+    padding: 2.4rem;
+    margin-bottom: 2rem;
+}
+.fake-page__section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1.6rem;
+}
+.fake-page__row {
+    display: flex;
+    gap: 3.2rem;
+    flex-wrap: wrap;
+}
+.fake-page__field { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; min-width: 18rem; }
+.fake-page__label { font-size: 1.3rem; color: #9ca3af; }
+.fake-page__value { font-size: 1.5rem; color: #374151; font-weight: 500; }
+.fake-page__status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 10rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: #fbebeb;
+    color: #e31f1f;
+    margin-top: 2rem;
+}
+
+/* OVERLAY */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.45);
+    justify-content: flex-end;
+    align-items: stretch;
+}
+.modal-overlay.show { display: flex; }
+
+/* PANEL */
+.modal-broker {
+    width: 52rem;
+    max-width: 100vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: -4px 0 32px rgba(0,0,0,0.14);
+}
+
+/* HEADER */
+.modal__header {
+    padding: 2.4rem 2.4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+.denied-appeal__title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--brand-blue);
+    font-family: var(--font-family);
+}
+.modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 0.8rem;
+    transition: background 0.2s;
+}
+.modal__close:hover { background: #f3f4f6; }
+
+/* SCROLL BODY */
+.modal-denial__body {
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* ALERT */
+.denied-appeal__alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.4rem 1.6rem;
+    border-radius: 1.6rem;
+}
+.denied-appeal__alert--error { background: rgba(227, 31, 31, 0.07); }
+.denied-appeal__alert--success { background: rgba(84, 153, 59, 0.10); }
+.denied-appeal__alert-icon { flex-shrink: 0; margin-top: 0.1rem; }
+.denied-appeal__alert-text {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #e31f1f;
+    margin: 0;
+}
+.denied-appeal__alert-text--success { color: #54993b; }
+
+/* REASON */
+.denied-appeal__reason { display: flex; flex-direction: column; gap: 0.6rem; }
+.denied-appeal__reason-label { font-size: 1.5rem; color: #9ca3af; margin: 0; }
+.denied-appeal__reason-text { font-size: 1.6rem; color: #4b5563; line-height: 1.4; margin: 0; }
+
+/* DIVIDER */
+.denied-appeal__divider { border: none; border-top: 1px solid #e5e7eb; margin: 0; }
+
+/* PROMPT */
+.denied-appeal__prompt {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--brand-blue);
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* FIELD */
+.denied-appeal__field { display: flex; flex-direction: column; gap: 0.8rem; }
+.modal__field-name { font-size: 1.4rem; color: #9ca3af; }
+.denied-appeal__textarea {
+    min-height: 13rem;
+    resize: vertical;
+    border-radius: 1.2rem;
+    border: 1.5px solid #e5e7eb;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.5rem;
+    line-height: 1.35;
+    color: #374151;
+    background: #fff;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+.denied-appeal__textarea:focus { border-color: var(--brand-blue); outline: none; }
+.denied-appeal__textarea::placeholder { color: #c4c9d4; }
+.denied-appeal__status { font-size: 1.3rem; color: #939393; min-height: 1.8rem; }
+
+/* SECTIONS - hidden by default, shown by state */
+.denied-appeal__denied-section,
+.denied-appeal__sent-section {
+    display: none;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* SENT INFO */
+.denied-appeal__sent-info {}
+.denied-appeal__sent-text { font-size: 1.5rem; color: #4b5563; line-height: 1.4; margin: 0; }
+.denied-appeal__sent-comment { display: flex; flex-direction: column; gap: 0.6rem; }
+.denied-appeal__sent-comment-text { font-size: 1.5rem; color: #4b5563; line-height: 1.4; margin: 0; }
+
+/* FOOTER */
+.denied-appeal__footer {
+    padding: 1.6rem 2.4rem;
+    display: flex;
+    justify-content: flex-end;
+    background: #fff;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+    border-radius: 0;
+    flex-shrink: 0;
+}
+.denied-appeal__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 3.2rem;
+    background: var(--brand-blue);
+    color: #fff;
+    border-radius: 10rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    min-width: 18rem;
+    transition: opacity 0.2s;
+}
+.denied-appeal__btn:hover:not(:disabled) { opacity: 0.88; }
+.denied-appeal__btn:disabled { opacity: 0.35; cursor: default; }
+
+/* STATE MACHINE */
+[data-state="denied-empty"] .denied-appeal__denied-section,
+[data-state="denied-filled"] .denied-appeal__denied-section {
+    display: flex;
+}
+[data-state="appeal-sent"] .denied-appeal__sent-section {
+    display: flex;
+}
+[data-state="appeal-sent"] .denied-appeal__footer {
+    display: none;
+}
+
+/* DEMO BAR */
+.demo-bar {
+    position: fixed;
+    bottom: 2.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    border-radius: 1.6rem;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 9999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    white-space: nowrap;
+}
+.demo-bar__label { color: #6b7280; font-size: 1.2rem; }
+.demo-btn {
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    background: #374151;
+    color: #9ca3af;
+    transition: all 0.15s;
+}
+.demo-btn.active { background: var(--brand-blue); color: #fff; }
+.demo-btn:hover:not(.active) { background: #4b5563; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- FAKE BROKER PAGE (background) -->
+<div class="fake-page">
+    <div class="fake-page__inner">
+        <h1 class="fake-page__title">Личный кабинет брокера</h1>
+
+        <div class="fake-page__section">
+            <div class="fake-page__section-title">Информация об организации</div>
+            <div class="fake-page__row">
+                <div class="fake-page__field">
+                    <div class="fake-page__label">Организация</div>
+                    <div class="fake-page__value">ООО «Недвижимость Плюс»</div>
+                </div>
+                <div class="fake-page__field">
+                    <div class="fake-page__label">ФИО</div>
+                    <div class="fake-page__value">Петров Игорь Михайлович</div>
+                </div>
+                <div class="fake-page__field">
+                    <div class="fake-page__label">Телефон</div>
+                    <div class="fake-page__value">+7 903 512-78-90</div>
+                </div>
+            </div>
+            <div class="fake-page__status-badge">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="7" stroke="#e31f1f" stroke-width="1.5"/>
+                    <path d="M8 5v4M8 11v.5" stroke="#e31f1f" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Заявка отклонена — нажмите, чтобы открыть панель
+            </div>
+        </div>
+
+        <div class="fake-page__section">
+            <div class="fake-page__section-title">Жилые комплексы</div>
+            <div class="fake-page__row">
+                <div class="fake-page__field"><div class="fake-page__label">Назначен ЖК</div><div class="fake-page__value">Мастерс</div></div>
+                <div class="fake-page__field"><div class="fake-page__label">Статус</div><div class="fake-page__value" style="color:#e31f1f">Отказано</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DENIED APPEAL PANEL -->
+<div class="modal-overlay show" id="denied-appeal-overlay">
+    <form class="modal-broker" id="denied-panel" data-state="denied-empty" novalidate>
+
+        <!-- Header -->
+        <div class="modal__header">
+            <h2 class="denied-appeal__title">Статус регистрации</h2>
+            <button type="button" class="btn-reset modal__close" onclick="closePanel()" aria-label="Закрыть">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                    <path d="M6 6L20 20M20 6L6 20" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-denial__body">
+
+            <!-- STATE: denied-empty / denied-filled -->
+            <div class="denied-appeal__denied-section">
+
+                <div class="denied-appeal__alert denied-appeal__alert--error">
+                    <svg class="denied-appeal__alert-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 5a1 1 0 011 1v4a1 1 0 11-2 0V8a1 1 0 011-1zm0 8a1 1 0 100 2 1 1 0 000-2z" fill="#E31F1F"/>
+                    </svg>
+                    <p class="denied-appeal__alert-text">Ваша заявка на регистрацию была рассмотрена и отклонена</p>
+                </div>
+
+                <div class="denied-appeal__reason">
+                    <p class="denied-appeal__reason-label">Причина:</p>
+                    <p class="denied-appeal__reason-text" id="denial-reason-text">Не предоставлены документы об аккредитации агентства.</p>
+                </div>
+
+                <hr class="denied-appeal__divider">
+
+                <p class="denied-appeal__prompt">
+                    Если вы считаете решение ошибочным,<br>
+                    оставьте комментарий в поле ниже.<br>
+                    Наши менеджеры изучат заявку и свяжутся с вами.
+                </p>
+
+                <div class="denied-appeal__field">
+                    <div class="modal__field-name">Подача апелляции:</div>
+                    <textarea class="denied-appeal__textarea"
+                              id="appeal-text"
+                              placeholder="Введите текст"
+                              rows="5"
+                              oninput="onTextareaInput(this)"></textarea>
+                    <div class="denied-appeal__status" id="appeal-status" aria-live="polite"></div>
+                </div>
+
+            </div>
+
+            <!-- STATE: appeal-sent -->
+            <div class="denied-appeal__sent-section">
+
+                <div class="denied-appeal__alert denied-appeal__alert--success">
+                    <svg class="denied-appeal__alert-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="#54993B" stroke-width="1.8"/>
+                        <path d="M7.5 12l3 3 6-6" stroke="#54993B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p class="denied-appeal__alert-text denied-appeal__alert-text--success">Ваша апелляция успешно подана!</p>
+                </div>
+
+                <div class="denied-appeal__sent-info">
+                    <p class="denied-appeal__sent-text">
+                        После проверки с вами свяжутся наши менеджеры с результатом.<br>
+                        Обычно это занимает от 1 до 7 рабочих дней.
+                    </p>
+                </div>
+
+                <hr class="denied-appeal__divider">
+
+                <div class="denied-appeal__sent-comment">
+                    <p class="denied-appeal__reason-label">Ваш комментарий:</p>
+                    <p class="denied-appeal__sent-comment-text" id="sent-comment-text"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="denied-appeal__footer">
+            <button type="button"
+                    class="denied-appeal__btn"
+                    id="send-btn"
+                    onclick="sendAppeal()"
+                    disabled>
+                Отправить
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">
+    <span class="demo-bar__label">Экран:</span>
+    <button class="demo-btn active" onclick="setState('denied-empty')">3 — Отказано, пусто</button>
+    <button class="demo-btn" onclick="setState('denied-filled')">4 — Отказано, заполнено</button>
+    <button class="demo-btn" onclick="setState('appeal-sent')">5 — Апелляция подана</button>
+    <button class="demo-btn" style="background:#374151;color:#9ca3af" onclick="togglePanel()">Показать/скрыть</button>
+</div>
+
+<script>
+const panel = document.getElementById('denied-panel');
+const overlay = document.getElementById('denied-appeal-overlay');
+const textarea = document.getElementById('appeal-text');
+const sendBtn = document.getElementById('send-btn');
+const sentComment = document.getElementById('sent-comment-text');
+
+function setState(state) {
+    panel.dataset.state = state;
+    overlay.classList.add('show');
+
+    if (state === 'denied-empty') {
+        textarea.value = '';
+        sendBtn.disabled = true;
+        document.getElementById('appeal-status').textContent = '';
+    } else if (state === 'denied-filled') {
+        textarea.value = 'Все документы были предоставлены в соответствии с требованиями. Прошу повторно рассмотреть мою заявку.';
+        sendBtn.disabled = false;
+    } else if (state === 'appeal-sent') {
+        sentComment.textContent = textarea.value || 'Все документы были предоставлены в соответствии с требованиями. Прошу повторно рассмотреть мою заявку.';
+    }
+
+    document.querySelectorAll('.demo-btn').forEach((b, i) => {
+        const states = ['denied-empty', 'denied-filled', 'appeal-sent'];
+        b.classList.toggle('active', states[i] === state);
+    });
+}
+
+function onTextareaInput(el) {
+    const filled = el.value.trim().length > 0;
+    sendBtn.disabled = !filled;
+    panel.dataset.state = filled ? 'denied-filled' : 'denied-empty';
+}
+
+function sendAppeal() {
+    const text = textarea.value.trim();
+    if (!text) return;
+    sentComment.textContent = text;
+    setState('appeal-sent');
+}
+
+function closePanel() {
+    overlay.classList.remove('show');
+}
+
+function togglePanel() {
+    overlay.classList.toggle('show');
+}
+
+document.addEventListener('click', function(e) {
+    if (e.target === overlay) closePanel();
+});
+</script>
+</body>
+</html>
