@@ -96,7 +96,7 @@ input, textarea { font-family: inherit; }
   width: 4.2rem; height: 4.2rem;
   background: transparent;
   border: 2px solid var(--blue);
-  border-radius: 0.5rem;
+  border-radius: 0;
   display: flex; align-items: center; justify-content: center;
   color: var(--blue);
   font-size: 1.5rem;
@@ -358,6 +358,12 @@ input, textarea { font-family: inherit; }
 .status-pill--approved { background: rgba(22,163,74,0.10); color: #16a34a; }
 .status-pill--denied { background: rgba(227,31,31,0.08); color: var(--red); }
 .status-pill svg { flex-shrink: 0; }
+
+/* Org/broker name link */
+.org-name {
+  color: #1e71e6;
+  cursor: pointer;
+}
 
 /* Reason text */
 .reason-text {
@@ -709,7 +715,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2345</td>
             <td>17.11.25</td>
-            <td>ООО "Брокер Плюс"</td>
+            <td class="org-name">ООО "Брокер Плюс"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -730,7 +736,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2344</td>
             <td>18.11.25</td>
-            <td>ООО "Брокер Плюс"</td>
+            <td class="org-name">ООО "Брокер Плюс"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -751,7 +757,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2343</td>
             <td>15.11.25</td>
-            <td>ООО "Брокер"</td>
+            <td class="org-name">ООО "Брокер"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -772,7 +778,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2342</td>
             <td>14.11.25</td>
-            <td>ООО "Брокер Плюс"</td>
+            <td class="org-name">ООО "Брокер Плюс"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -793,7 +799,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2341</td>
             <td>13.11.25</td>
-            <td>ООО "Брокер Плюс"</td>
+            <td class="org-name">ООО "Брокер Плюс"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -814,7 +820,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2340</td>
             <td>12.11.25</td>
-            <td>ООО "Брокер"</td>
+            <td class="org-name">ООО "Брокер"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -835,7 +841,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2339</td>
             <td>11.11.25</td>
-            <td>ООО "Брокер Плюс"</td>
+            <td class="org-name">ООО "Брокер Плюс"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
@@ -856,7 +862,7 @@ input, textarea { font-family: inherit; }
           <tr>
             <td>2338</td>
             <td>10.11.25</td>
-            <td>ООО "Брокер"</td>
+            <td class="org-name">ООО "Брокер"</td>
             <td>8 918 209 11 03</td>
             <td>
               <div class="jk-cell">
