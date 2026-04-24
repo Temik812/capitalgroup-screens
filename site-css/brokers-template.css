@@ -1,0 +1,23 @@
+.profile-broker.status-item,
+.zhk-broker.status-item{
+    padding-left: 1.4rem !important;
+    padding-right: 1.4rem !important;
+}
+
+.no-hover:hover {
+    text-decoration: none !important;
+    cursor: unset !important;
+    color: black !important;
+}
+
+.modal__value a {
+    color: #1E71E6;
+}
+
+.modal__value:hover, .modal__value a:hover {
+    text-decoration: none !important;
+}
+
+#brokerModal .modal-broker {
+    padding: 45px 38px;
+}
