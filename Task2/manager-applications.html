@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявки — менеджер | Capital Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../site-css/vendor.css">
+    <link rel="stylesheet" href="../site-css/main.css">
+    <link rel="stylesheet" href="../site-css/custom.css">
+    <link rel="stylesheet" href="../site-css/brokers-template.css">
+    <style>
+    /* ===== ДЕЛЬТА Task2 ===== */
+    .account-menu__link.active-link .account-menu__link-img path[stroke] { stroke: var(--brand-blue); }
+    .table-applications .table__cell--phone { white-space: nowrap; }
+    .table-applications .table__head .table__header { background: #fff !important; border-bottom: 0; }
+    .account-part_profile .table-container { background: #fff; border-radius: 24px; box-shadow: none; padding: 16px; }
+    .page-subtabs { display: flex; gap: 32px; }
+    .page-subtab { position: relative; background: none; border: 0; padding: 12px 4px; cursor: pointer; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; color: #939393; }
+    .page-subtab:hover { color: #005DAD; }
+    .page-subtab.is-active { color: #005DAD; }
+    .page-subtab.is-active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #005DAD; }
+    .page-header--with-subtabs { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 24px; border-bottom: 1px solid #E5E7EB; padding-bottom: 0; }
+    .table-applications .id-link { color: #1E71E6; cursor: pointer; }
+    .table-applications .id-link:hover { text-decoration: underline; }
+    .zhk-select { display: inline-flex; align-items: center; gap: 8px; color: #1E71E6; cursor: pointer; }
+    .zhk-select__value { text-decoration: underline; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .zhk-select__arrow { width: 16px; height: 16px; flex: 0 0 auto; }
+    .files-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 12px; background: #F4F4F4; color: #4B5563; font-size: 14px; }
+    .files-badge svg { width: 14px; height: 18px; }
+    .status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 10px; font-size: 14px; min-width: 130px; justify-content: space-between; }
+    .status-pill svg { width: 12px; height: 8px; }
+    .status-pill--waiting { background: #F4F4F4; color: #828282; }
+    .status-pill--approved { background: #E7F9E0; color: #54993B; }
+    .status-pill--rejected { background: #FBEBEB; color: #CF0B0B; }
+    .comment-cell { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #9CA3AF; font-size: 14px; max-width: 280px; }
+    .comment-cell__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .comment-cell__arrow { flex: 0 0 auto; width: 8px; height: 12px; color: #9CA3AF; }
+    .account-part_profile .pagination { gap: 4px; justify-content: flex-start; margin-top: 16px; }
+    .account-part_profile .pagination__button { min-width: 24px; padding: 4px 8px; border: 0; background: transparent; color: #005DAD; font-weight: 500; }
+    .account-part_profile .pagination__button:hover { background: rgba(0, 93, 173, 0.08); }
+    .account-part_profile .pagination__button--active { background: #005DAD; color: #fff; border-color: #005DAD; }
+    .account-part_profile .pagination__button--arrow { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; }
+    .account-part_profile .pagination__dots { padding: 0 4px; color: #005DAD; font-weight: 700; }
+    .tab-pane { display: none; }
+    .tab-pane.is-active { display: block; }
+    </style>
+</head>
+<body class="page__body">
+<main class="main">
+    <div class="account-layout account-layout_offers">
+        <div class="account-menu">
+            <div class="account-menu__top">
+                <a class="account-menu__logo" href="#">
+                    <svg width="190" height="36" viewBox="0 0 250 33" fill="none"><text x="0" y="26" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#0062A8" letter-spacing="1">CG CAPITAL GROUP</text></svg>
+                </a>
+                <div class="account-menu__user">
+                    <div class="account-menu__user-avatar"><img src="https://i.pravatar.cc/64?img=12" alt=""></div>
+                    <div class="account-menu__user-right">
+                        <p class="account-menu__user-company">Менеджер</p>
+                        <p class="account-menu__user-name">Константин Кузнецов</p>
+                    </div>
+                </div>
+                <div class="account-menu__links">
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M6.25 8.75C6.25 10.08 6.78 11.35 7.71 12.29C8.65 13.22 9.92 13.75 11.25 13.75C12.58 13.75 13.85 13.22 14.79 12.29C15.72 11.35 16.25 10.08 16.25 8.75C16.25 7.42 15.72 6.15 14.79 5.21C13.85 4.28 12.58 3.75 11.25 3.75C9.92 3.75 8.65 4.28 7.71 5.21C6.78 6.15 6.25 7.42 6.25 8.75Z" stroke="#939393" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.75 26.25V23.75C3.75 22.42 4.28 21.15 5.21 20.21C6.15 19.28 7.42 18.75 8.75 18.75H13.75C15.08 18.75 16.35 19.28 17.29 20.21C18.22 21.15 18.75 22.42 18.75 23.75V26.25" stroke="#939393" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 3.91C21.08 4.19 22.03 4.81 22.71 5.69C23.39 6.57 23.76 7.65 23.76 8.76C23.76 9.87 23.39 10.94 22.71 11.82C22.03 12.7 21.08 13.32 20 13.6" stroke="#939393" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26.25 26.25V23.75C26.24 22.65 25.87 21.58 25.19 20.71C24.52 19.83 23.57 19.21 22.5 18.94" stroke="#939393" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="account-menu__link-text">Брокеры</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M3.75 7.5H26.25V22.5H3.75V7.5ZM2.5 5C1.81 5 1.25 5.56 1.25 6.25V23.75C1.25 24.44 1.81 25 2.5 25H27.5C28.19 25 28.75 24.44 28.75 23.75V6.25C28.75 5.56 28.19 5 27.5 5H2.5ZM16.25 10H23.75V12.5H16.25V10ZM22.5 15H16.25V17.5H22.5V15ZM13.13 12.5C13.13 14.23 11.73 15.63 10 15.63C8.27 15.63 6.88 14.23 6.88 12.5C6.88 10.77 8.27 9.38 10 9.38C11.73 9.38 13.13 10.77 13.13 12.5ZM10 16.88C7.58 16.88 5.63 18.83 5.63 21.25H14.38C14.38 18.83 12.42 16.88 10 16.88Z" fill="#939393"/></svg><div class="account-menu__link-text">Клиенты</div></a>
+                    <a href="#" class="account-menu__link active-link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M25 27.5H5C4.31 27.5 3.75 26.94 3.75 26.25V3.75C3.75 3.06 4.31 2.5 5 2.5H25C25.69 2.5 26.25 3.06 26.25 3.75V26.25C26.25 26.94 25.69 27.5 25 27.5ZM23.75 25V5H6.25V25H23.75ZM10 8.75H20V11.25H10V8.75ZM10 13.75H20V16.25H10V13.75ZM10 18.75H20V21.25H10V18.75Z" fill="#939393"/></svg><div class="account-menu__link-text">Заявки</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M23.75 27.5H6.25C4.18 27.5 2.5 25.82 2.5 23.75V3.75C2.5 3.06 3.06 2.5 3.75 2.5H21.25C21.94 2.5 22.5 3.06 22.5 3.75V18.75H27.5V23.75C27.5 25.82 25.82 27.5 23.75 27.5ZM22.5 21.25V23.75C22.5 24.44 23.06 25 23.75 25C24.44 25 25 24.44 25 23.75V21.25H22.5ZM20 25V5H5V23.75C5 24.44 5.56 25 6.25 25H20ZM7.5 8.75H17.5V11.25H7.5V8.75ZM7.5 13.75H17.5V16.25H7.5V13.75ZM7.5 18.75H13.75V21.25H7.5V18.75Z" fill="#939393"/></svg><div class="account-menu__link-text">Заявки на обучение</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M11.25 5L7.5 2.5L3.75 5V23.75C3.75 25.82 5.43 27.5 7.5 27.5H25C27.07 27.5 28.75 25.82 28.75 23.75V20H26.25V5L22.5 2.5L18.75 5L15 2.5L11.25 5ZM23.75 20H8.75V23.75C8.75 24.44 8.19 25 7.5 25C6.81 25 6.25 24.44 6.25 23.75V6.34L7.5 5.5L11.25 8L15 5.5L18.75 8L22.5 5.5L23.75 6.34V20ZM25 25H11.04C11.17 24.61 11.25 24.19 11.25 23.75V22.5H26.25V23.75C26.25 24.44 25.69 25 25 25Z" fill="#939393"/></svg><div class="account-menu__link-text">Заявки на продажу</div></a>
+                </div>
+            </div>
+            <div class="account-menu__bottom">
+                <div class="account-menu__separator"></div>
+                <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.62 9.63L15.73 13.75H2.5V16.25H15.73L11.62 20.37L13.38 22.13L20.52 15L13.38 7.87L11.62 9.63ZM25 2.5H20V5H25V25H20V27.5H25C26.38 27.5 27.5 26.38 27.5 25V5C27.5 3.62 26.38 2.5 25 2.5Z" fill="#939393"/></svg><div class="account-menu__link-text">Выйти из профиля</div></a>
+            </div>
+        </div>
+
+        <div class="account-part account-part_profile">
+            <div class="page-header page-header--with-subtabs">
+                <h1 class="profile-client__top-section-title title">Заявки (32)</h1>
+                <nav class="page-subtabs">
+                    <button class="page-subtab is-active" data-tab="rooms">Бронь квартиры</button>
+                    <button class="page-subtab" data-tab="docs">Документы</button>
+                    <button class="page-subtab" data-tab="ads">Реклама</button>
+                    <button class="page-subtab" data-tab="access">Доступы к ЖК</button>
+                </nav>
+            </div>
+
+            <div class="filters">
+                <div class="filters__left">
+                    <div class="filter-tabs">
+                        <button class="filter-tab filter-tab--active">Все</button>
+                        <button class="filter-tab">Ожидает</button>
+                        <button class="filter-tab">Согласовано</button>
+                        <button class="filter-tab">Отказано</button>
+                    </div>
+                    <div class="sort-dropdown">
+                        <div class="sort-dropdown__selected">
+                            <span class="sort__label">Сортировать:</span>
+                            <span class="sort__value">По алфавиту</span>
+                            <svg class="sort__arrow" width="15" height="9" viewBox="0 0 15 9" fill="none"><path d="M13.33 0L14.51 1.18L7.26 8.43L0 1.18L1.18 0L7.26 6.08L13.33 0Z" fill="#3D81FF"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C3.58 16 0 12.42 0 8C0 3.58 3.58 0 8 0C12.42 0 16 3.58 16 8C16 9.85 15.37 11.55 14.32 12.91L19.71 18.29L18.29 19.71L12.91 14.32C11.55 15.37 9.85 16 8 16ZM14 8C14 11.31 11.31 14 8 14C4.69 14 2 11.31 2 8C2 4.69 4.69 2 8 2C11.31 2 14 4.69 14 8Z" fill="#005DAD"/></svg>
+                    <form><input type="text" class="search__input" placeholder="Поиск по базе заявок"></form>
+                </div>
+            </div>
+
+            <div class="tab-pane is-active" data-pane="rooms">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Дом / Квартира</th><th class="table__header">ЖК</th><th class="table__header">Клиент</th><th class="table__header">Менеджер</th><th class="table__header">Телефон</th><th class="table__header">Статус заявки</th>
+                    </tr></thead><tbody class="table__body" id="rooms-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="docs">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Статус заявки</th><th class="table__header">Файлы</th>
+                    </tr></thead><tbody class="table__body" id="docs-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="ads">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Статус заявки</th><th class="table__header">Файлы</th><th class="table__header">Комментарий</th>
+                    </tr></thead><tbody class="table__body" id="ads-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="access">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">ЖК</th><th class="table__header">Статус заявки</th>
+                    </tr></thead><tbody class="table__body" id="access-body"></tbody></table>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="pagination__button pagination__button--arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#005DAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="pagination__button">1</button><button class="pagination__button">2</button><button class="pagination__button">3</button>
+                <button class="pagination__button pagination__button--active">4</button>
+                <button class="pagination__button">5</button><button class="pagination__button">10</button>
+                <span class="pagination__dots">...</span><button class="pagination__button">24</button>
+                <button class="pagination__button pagination__button--arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#005DAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+
+            <div class="account-footer">© Capital Group, 2025. Личный кабинет менеджера</div>
+        </div>
+    </div>
+</main>
+
+<script>
+const ARROW = '<svg viewBox="0 0 12 8" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.67 0L11.61.94 5.8 6.75 0 .94.94 0 5.8 4.86 10.67 0Z" fill="#828282"/></svg>';
+const ZHK_ARROW = '<svg class="zhk-select__arrow" viewBox="0 0 12 8" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.67 0L11.61.94 5.8 6.75 0 .94.94 0 5.8 4.86 10.67 0Z" fill="#1E71E6"/></svg>';
+const STATUS = {
+    waiting: `<div class="status-pill status-pill--waiting">На проверке ${ARROW}</div>`,
+    approved: `<div class="status-pill status-pill--approved">Согласовано ${ARROW}</div>`,
+    rejected: `<div class="status-pill status-pill--rejected">Отказано ${ARROW}</div>`,
+};
+const FILE_BADGE = (n) => `<div class="files-badge"><svg viewBox="0 0 14 18" fill="none"><path d="M0 0h10l4 4v14H0V0z" stroke="#9CA3AF" stroke-width="1.2" fill="none"/></svg>${n}</div>`;
+const ZHK_LINK = (text) => `<div class="zhk-select"><span class="zhk-select__value">${text}</span>${ZHK_ARROW}</div>`;
+const COMMENT = (text) => `<div class="comment-cell"><span class="comment-cell__text">${text}</span><svg class="comment-cell__arrow" viewBox="0 0 8 12" fill="none"><path d="M0 1.5L1.5 0 7.5 6 1.5 12 0 10.5 4.5 6Z" fill="#9CA3AF"/></svg></div>`;
+const link = (id) => `<span class="id-link">${id}</span>`;
+
+const dataRooms = [
+    [2345,'17.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','waiting'],
+    [2344,'16.11.25','ЖК Holm, этаж 4, кв. № 25, 50 кв.м','Мастерс, Викторенко','ООО "Брокер Плюс"','Семёнов Семён Семёнович','8 916 200 11 03','approved'],
+    [2343,'15.11.25','ЖК Holm, этаж 5, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','waiting'],
+    [2342,'14.11.25','Capital Towers, ул. Строителей, кв.10','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','rejected'],
+    [2341,'13.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','approved'],
+    [2340,'12.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','waiting'],
+    [2339,'11.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','ООО "Брокер Плюс"','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','rejected'],
+    [2338,'10.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','approved'],
+    [2337,'09.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Capital Towers, Викт...','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','approved'],
+    [2336,'08.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','waiting'],
+    [2335,'07.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','approved'],
+    [2334,'06.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','rejected'],
+];
+const dataDocs = [[2345,'17.11.25','waiting',3],[2344,'16.11.25','approved',1],[2343,'15.11.25','rejected',1],[2342,'14.11.25','approved',3],[2341,'13.11.25','waiting',2],[2340,'12.11.25','waiting',3],[2339,'11.11.25','approved',1],[2338,'10.11.25','waiting',3],[2337,'09.11.25','waiting',2],[2336,'08.11.25','waiting',3],[2335,'07.11.25','waiting',1],[2334,'06.11.25','waiting',3],[2333,'05.11.25','approved',2],[2332,'04.11.25','approved',3],[2331,'03.11.25','waiting',1]];
+const dataAds = [[2345,'17.11.25','waiting',3,'Текст комментария'],[2344,'16.11.25','approved',1,'Очень длинный текст коммент...'],[2343,'15.11.25','rejected',1,'Текст комментария'],[2342,'14.11.25','approved',3,'Очень длинный текст коммент...'],[2341,'13.11.25','waiting',2,'Текст комментария'],[2340,'12.11.25','waiting',3,'Текст комментария'],[2339,'11.11.25','approved',1,'Очень длинный текст коммент...'],[2338,'10.11.25','waiting',3,'Текст комментария']];
+const dataAccess = [[2345,'17.11.25','Мастерс, Викторенко','waiting'],[2344,'16.11.25','Мастерс, Викторен...','approved'],[2343,'15.11.25','Мастерс, Викторенко','rejected'],[2342,'14.11.25','Мастерс, Викторенко','approved'],[2341,'13.11.25','Бадаевский, Викто...','waiting'],[2340,'12.11.25','Мастерс, Викторенко','waiting'],[2339,'11.11.25','Мастерс, Викторен...','approved'],[2338,'10.11.25','Мастерс, Викторенко','approved'],[2337,'09.11.25','Мастерс, Викторенко','rejected'],[2336,'08.11.25','Capital Towers, Викт...','waiting'],[2335,'07.11.25','Мастерс, Викторенко','approved'],[2334,'06.11.25','Мастерс, Викторенко','rejected'],[2333,'05.11.25','ОКО, Викторенко','waiting'],[2332,'04.11.25','Мастерс, Викторенко','waiting'],[2331,'03.11.25','Триколор, Викторе...','approved']];
+
+document.getElementById('rooms-body').innerHTML = dataRooms.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${r[2]}</td><td class="table__cell">${ZHK_LINK(r[3])}</td><td class="table__cell">${r[4]}</td><td class="table__cell">${r[5]}</td><td class="table__cell table__cell--phone">${r[6]}</td><td class="table__cell">${STATUS[r[7]]}</td></tr>`).join('');
+document.getElementById('docs-body').innerHTML = dataDocs.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${STATUS[r[2]]}</td><td class="table__cell">${FILE_BADGE(r[3])}</td></tr>`).join('');
+document.getElementById('ads-body').innerHTML = dataAds.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${STATUS[r[2]]}</td><td class="table__cell">${FILE_BADGE(r[3])}</td><td class="table__cell">${COMMENT(r[4])}</td></tr>`).join('');
+document.getElementById('access-body').innerHTML = dataAccess.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${ZHK_LINK(r[2])}</td><td class="table__cell">${STATUS[r[3]]}</td></tr>`).join('');
+
+document.querySelectorAll('.page-subtab').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-subtab').forEach(b => b.classList.toggle('is-active', b === btn));
+        const id = btn.dataset.tab;
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('is-active', p.dataset.pane === id));
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База заявок — брокер | Capital Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../site-css/vendor.css">
+    <link rel="stylesheet" href="../site-css/main.css">
+    <link rel="stylesheet" href="../site-css/custom.css">
+    <link rel="stylesheet" href="../site-css/brokers-template.css">
+    <style>
+    .account-menu__link.active-link .account-menu__link-img path[stroke] { stroke: var(--brand-blue); }
+    .table-applications .table__cell--phone { white-space: nowrap; }
+    .table-applications .table__head .table__header { background: #fff !important; border-bottom: 0; }
+    .account-part_profile .table-container { background: #fff; border-radius: 24px; box-shadow: none; padding: 16px; }
+
+    /* Верхняя горизонтальная навигация (Персональные данные / Сотрудники / Клиенты / Заявки / Материалы / Спец. предложения).
+       На живом сайте есть .profile-nav с подчёркиванием активного пункта — используем его паттерн. */
+    .top-nav { display: flex; gap: 48px; padding: 24px 48px; border-bottom: 1px solid #E5E7EB; background: #fff; }
+    .top-nav__link { position: relative; padding: 16px 0; font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 500; color: #939393; text-decoration: none; }
+    .top-nav__link.active-link { color: #005DAD; }
+    .top-nav__link.active-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #005DAD; }
+    .top-nav__link:hover { color: #005DAD; }
+
+    /* Подтабы как в manager-applications. */
+    .page-subtabs { display: flex; gap: 32px; }
+    .page-subtab { position: relative; background: none; border: 0; padding: 12px 4px; cursor: pointer; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; color: #939393; }
+    .page-subtab:hover { color: #005DAD; }
+    .page-subtab.is-active { color: #005DAD; }
+    .page-subtab.is-active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #005DAD; }
+
+    /* Шапка: subtabs слева, поиск справа. */
+    .page-header--with-subtabs { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin: 32px 0 24px; border-bottom: 1px solid #E5E7EB; }
+
+    /* Заголовок страницы + кнопка. */
+    .page-title-row { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+    .add-btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; cursor: pointer; }
+    .add-btn:hover { background: #004b8d; }
+
+    /* Бренд-карточка пользователя в сайдбаре (компания + лого). */
+    .account-menu__user--company { background: #F9FAFB; border-radius: 16px; padding: 12px; }
+    .account-menu__user--company .account-menu__user-avatar { width: 56px; height: 56px; border-radius: 8px; background: #1E5C82; overflow: hidden; flex-shrink: 0; }
+    .account-menu__user--company .account-menu__user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .account-menu__user--company .account-menu__user-company { font-size: 11px; color: #828282; }
+    .account-menu__user--company .account-menu__user-name { font-size: 15px; font-weight: 600; color: #1F2937; }
+
+    /* Бейджи (числа справа от пункта меню — Сравнение лотов 2, Уведомления 2). */
+    .account-menu__link-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 100px; background: #1E71E6; color: #fff; font-size: 12px; font-weight: 500; }
+
+    /* ID, ЖК, status — те же, что в manager-applications. */
+    .table-applications .id-link { color: #1E71E6; cursor: pointer; }
+    .table-applications .id-link:hover { text-decoration: underline; }
+    .zhk-select { display: inline-flex; align-items: center; gap: 8px; color: #1E71E6; cursor: pointer; }
+    .zhk-select__value { text-decoration: underline; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .zhk-select__arrow { width: 16px; height: 16px; flex: 0 0 auto; }
+    .files-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 12px; background: #F4F4F4; color: #4B5563; font-size: 14px; }
+    .files-badge svg { width: 14px; height: 18px; }
+    .status-pill { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 10px; font-size: 14px; min-width: 110px; justify-content: center; }
+    .status-pill--waiting { background: #F4F4F4; color: #828282; }
+    .status-pill--approved { background: #E7F9E0; color: #54993B; }
+    .status-pill--rejected { background: #FBEBEB; color: #CF0B0B; }
+    .comment-cell { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #9CA3AF; font-size: 14px; max-width: 280px; }
+    .comment-cell__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .comment-cell__arrow { flex: 0 0 auto; width: 8px; height: 12px; color: #9CA3AF; }
+
+    /* Pagination. */
+    .account-part_profile .pagination { gap: 4px; justify-content: flex-start; margin-top: 16px; }
+    .account-part_profile .pagination__button { min-width: 24px; padding: 4px 8px; border: 0; background: transparent; color: #005DAD; font-weight: 500; }
+    .account-part_profile .pagination__button:hover { background: rgba(0, 93, 173, 0.08); }
+    .account-part_profile .pagination__button--active { background: #005DAD; color: #fff; border-color: #005DAD; }
+    .account-part_profile .pagination__button--arrow { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; }
+    .account-part_profile .pagination__dots { padding: 0 4px; color: #005DAD; font-weight: 700; }
+
+    .tab-pane { display: none; }
+    .tab-pane.is-active { display: block; }
+
+    /* ===== МОДАЛКА (правая выезжающая панель) ===== */
+    .right-panel { position: fixed; top: 0; right: 0; width: 480px; height: 100vh; background: #fff; box-shadow: -10px 0 25px rgba(0,0,0,0.1); padding: 32px 40px 100px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; z-index: 100; }
+    .right-panel.is-open { transform: translateX(0); }
+    .right-panel__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .right-panel__title { margin: 0; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 28px; color: #1F2937; }
+    .right-panel__close { background: none; border: 0; cursor: pointer; padding: 4px; }
+    .right-panel__close svg { width: 18px; height: 18px; }
+    .right-panel__row { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 12px 0; align-items: baseline; }
+    .right-panel__label { color: #9CA3AF; font-size: 14px; }
+    .right-panel__value { color: #1F2937; font-size: 15px; }
+    .right-panel__field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .right-panel__field-label { color: #9CA3AF; font-size: 13px; }
+    .right-panel__field-input { padding: 14px 16px; border: 1px solid #D1D5DB; border-radius: 12px; font-size: 15px; color: #1F2937; outline: none; }
+    .right-panel__field-input:focus { border-color: #005DAD; }
+    .right-panel__footer { position: absolute; right: 0; bottom: 0; left: 0; padding: 20px 40px; background: #fff; display: flex; justify-content: flex-end; gap: 12px; box-shadow: 0 -10px 25px rgba(0,0,0,0.05); }
+    .right-panel__btn { padding: 14px 32px; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 15px; cursor: pointer; }
+    .right-panel__btn--secondary { background: #fff; color: #4B5563; border: 1px solid #D1D5DB; }
+    .right-panel__btn--primary { background: #005DAD; color: #fff; }
+
+    /* Drag-zone для файлов. */
+    .dropzone { border: 1px dashed #B6C5DD; border-radius: 16px; padding: 32px; text-align: center; background: rgba(0,93,173,0.03); }
+    .dropzone__icon { width: 32px; height: 32px; margin: 0 auto 12px; color: #1E71E6; }
+    .dropzone__hint { color: #4B5563; font-size: 14px; margin-bottom: 4px; }
+    .dropzone__sub { color: #9CA3AF; font-size: 12px; margin-bottom: 16px; }
+    .dropzone__btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fff; border: 1px solid #D1D5DB; border-radius: 100px; color: #4B5563; cursor: pointer; }
+
+    .right-panel__field-status { display: inline-flex; padding: 4px 12px; border-radius: 8px; font-size: 13px; }
+
+    /* Demo-бар. */
+    .demo-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; padding: 8px 16px; background: #1a1a2e; color: #fff; font-size: 12px; }
+    .demo-btn { padding: 4px 10px; border: 0; border-radius: 6px; background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; font-size: 11px; cursor: pointer; }
+    .demo-btn.active { background: #005DAD; }
+    .demo-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+    </style>
+</head>
+<body class="page__body">
+
+<!-- ====== ВЕРХНЯЯ ГОРИЗОНТАЛЬНАЯ НАВИГАЦИЯ (только в брокерском кабинете) ====== -->
+<nav class="top-nav">
+    <a href="#" class="top-nav__link">Персональные данные</a>
+    <a href="#" class="top-nav__link">Сотрудники</a>
+    <a href="#" class="top-nav__link">Клиенты</a>
+    <a href="#" class="top-nav__link active-link">Заявки</a>
+    <a href="#" class="top-nav__link">Материалы</a>
+    <a href="#" class="top-nav__link">Спец. предложения</a>
+</nav>
+
+<main class="main">
+    <div class="account-layout account-layout_offers">
+        <div class="account-menu">
+            <div class="account-menu__top">
+                <a class="account-menu__logo" href="#">
+                    <svg width="190" height="36" viewBox="0 0 250 33" fill="none"><text x="0" y="26" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#0062A8" letter-spacing="1">CG CAPITAL GROUP</text></svg>
+                </a>
+                <div class="account-menu__user account-menu__user--company">
+                    <div class="account-menu__user-avatar">
+                        <svg viewBox="0 0 56 56" fill="#fff"><rect x="14" y="14" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"/><text x="28" y="38" text-anchor="middle" font-size="10" font-weight="700">LEXRAOC</text></svg>
+                    </div>
+                    <div class="account-menu__user-right">
+                        <p class="account-menu__user-company">Компания</p>
+                        <p class="account-menu__user-name">ООО "Брокер Плюс"</p>
+                    </div>
+                </div>
+                <div class="account-menu__links">
+                    <a href="#" class="account-menu__link active-link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 7.5h20v15H5V7.5z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10v6H10V12z" fill="#939393"/></svg>
+                        <div class="account-menu__link-text">Каталог объектов</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M7 4h12l4 4v18H7V4z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10M10 16h10M10 20h6" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Документы</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="9" cy="10" r="2" stroke="#939393" stroke-width="2" fill="none"/><circle cx="9" cy="20" r="2" stroke="#939393" stroke-width="2" fill="none"/><path d="M11 10h14M5 20h2M11 20h14" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Сравнение лотов</div>
+                        <span class="account-menu__link-badge">2</span>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 6h20v14H5V6z" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25h12a3 3 0 003-3v-2H5v5z" fill="#939393"/><path d="M9 11h12M9 15h8" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Новости</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 4a8 8 0 00-8 8v6l-2 3h20l-2-3v-6a8 8 0 00-8-8z" stroke="#939393" stroke-width="2" fill="none"/><path d="M12 24a3 3 0 006 0" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Уведомления</div>
+                        <span class="account-menu__link-badge">2</span>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="11" r="4" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#939393" stroke-width="2" fill="none"/></svg>
+                        <div class="account-menu__link-text">Профиль брокера</div>
+                    </a>
+                </div>
+            </div>
+            <div class="account-menu__bottom">
+                <div class="account-menu__separator"></div>
+                <a href="#" class="account-menu__link">
+                    <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="3" stroke="#939393" stroke-width="2" fill="none"/><path d="M15 4v3M15 23v3M4 15h3M23 15h3M7 7l2 2M21 21l2 2M21 9l2-2M7 23l2-2" stroke="#939393" stroke-width="2"/></svg>
+                    <div class="account-menu__link-text">Организация</div>
+                </a>
+                <a href="#" class="account-menu__link">
+                    <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.62 9.63L15.73 13.75H2.5V16.25H15.73L11.62 20.37L13.38 22.13L20.52 15L13.38 7.87L11.62 9.63ZM25 2.5H20V5H25V25H20V27.5H25C26.38 27.5 27.5 26.38 27.5 25V5C27.5 3.62 26.38 2.5 25 2.5Z" fill="#939393"/></svg>
+                    <div class="account-menu__link-text">Выйти из профиля</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="account-part account-part_profile">
+            <div class="page-title-row">
+                <h1 class="profile-client__top-section-title title">База заявок (32)</h1>
+                <button class="add-btn" data-open="modal-rooms">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                    Добавить заявку
+                </button>
+            </div>
+
+            <div class="page-header page-header--with-subtabs">
+                <nav class="page-subtabs">
+                    <button class="page-subtab is-active" data-tab="rooms">Бронь квартиры</button>
+                    <button class="page-subtab" data-tab="docs">Документы</button>
+                    <button class="page-subtab" data-tab="ads">Реклама</button>
+                    <button class="page-subtab" data-tab="access">Доступы к ЖК</button>
+                </nav>
+                <div class="search">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C3.58 16 0 12.42 0 8C0 3.58 3.58 0 8 0C12.42 0 16 3.58 16 8C16 9.85 15.37 11.55 14.32 12.91L19.71 18.29L18.29 19.71L12.91 14.32C11.55 15.37 9.85 16 8 16ZM14 8C14 11.31 11.31 14 8 14C4.69 14 2 11.31 2 8C2 4.69 4.69 2 8 2C11.31 2 14 4.69 14 8Z" fill="#005DAD"/></svg>
+                    <form><input type="text" class="search__input" placeholder="Поиск по базе заявок"></form>
+                </div>
+            </div>
+
+            <div class="tab-pane is-active" data-pane="rooms">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Дом / Квартира</th><th class="table__header">ЖК</th><th class="table__header">Клиент</th><th class="table__header">Менеджер</th><th class="table__header">Телефон</th><th class="table__header">Статус заявки</th>
+                    </tr></thead><tbody class="table__body" id="rooms-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="docs">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Статус заявки</th><th class="table__header">Файлы</th>
+                    </tr></thead><tbody class="table__body" id="docs-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="ads">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">Статус заявки</th><th class="table__header">Файлы</th><th class="table__header">Комментарий</th>
+                    </tr></thead><tbody class="table__body" id="ads-body"></tbody></table>
+                </div>
+            </div>
+            <div class="tab-pane" data-pane="access">
+                <div class="table-container">
+                    <table class="table table-applications"><thead class="table__head"><tr class="table__row">
+                        <th class="table__header">ID Заявки</th><th class="table__header">Дата</th><th class="table__header">ЖК</th><th class="table__header">Статус заявки</th>
+                    </tr></thead><tbody class="table__body" id="access-body"></tbody></table>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="pagination__button pagination__button--arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#005DAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="pagination__button">1</button><button class="pagination__button">2</button><button class="pagination__button">3</button>
+                <button class="pagination__button pagination__button--active">4</button>
+                <button class="pagination__button">5</button><button class="pagination__button">10</button>
+                <span class="pagination__dots">...</span><button class="pagination__button">24</button>
+                <button class="pagination__button pagination__button--arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#005DAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+
+            <div class="account-footer">© Capital Group, 2025. Личный кабинет брокера</div>
+        </div>
+    </div>
+</main>
+
+<!-- ===== МОДАЛКИ (правые панели) ===== -->
+<aside class="right-panel" id="modal-detail-short">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Данные о заявке</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__row"><span class="right-panel__label">ID заявки</span><span class="right-panel__value">2345</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Дата</span><span class="right-panel__value">25.12.2025</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Статус</span><span class="right-panel__value"><span class="status-pill status-pill--approved">Согласовано</span></span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Файлы</span><span class="right-panel__value">📎 Filename.docx<br>📎 Filename.pdf</span></div>
+    <div class="right-panel__footer"><button class="right-panel__btn right-panel__btn--primary">Продолжить работу</button></div>
+</aside>
+
+<aside class="right-panel" id="modal-detail-full">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Данные о заявке</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__row"><span class="right-panel__label">ID заявки</span><span class="right-panel__value">2345</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Дата</span><span class="right-panel__value">25.12.2025</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">ЖК</span><span class="right-panel__value">Мастерс, Викторенко</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">ФИО клиента</span><span class="right-panel__value">Константинопольский Константин Константинович</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Статус</span><span class="right-panel__value"><span class="status-pill status-pill--approved">Согласовано</span></span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Комментарий</span><span class="right-panel__value">Тут текст комментария</span></div>
+    <div class="right-panel__row"><span class="right-panel__label">Файлы</span><span class="right-panel__value">📎 Filename.docx<br>📎 Filename.pdf</span></div>
+    <div class="right-panel__footer"><button class="right-panel__btn right-panel__btn--primary">Продолжить работу</button></div>
+</aside>
+
+<aside class="right-panel" id="modal-rooms">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Заявка на бронь квартиры</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Телефон *</label><input class="right-panel__field-input" placeholder="+7 (***) *** 35 35"></div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Фамилия клиента *</label><input class="right-panel__field-input" placeholder="Фамилия"></div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Имя клиента *</label><input class="right-panel__field-input" placeholder="Имя"></div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Отчество клиента *</label><input class="right-panel__field-input" placeholder="Отчество (При наличии)"></div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Род деятельности *</label><input class="right-panel__field-input" placeholder="Род деятельности"></div>
+    <div class="right-panel__footer">
+        <button class="right-panel__btn right-panel__btn--secondary" data-close>Отменить</button>
+        <button class="right-panel__btn right-panel__btn--primary">Отправить</button>
+    </div>
+</aside>
+
+<aside class="right-panel" id="modal-docs">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Заявка на документы</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__field">
+        <label class="right-panel__field-label">Карточка организации *</label>
+        <div class="dropzone">
+            <svg class="dropzone__icon" viewBox="0 0 32 32" fill="none"><path d="M16 22V8M10 14l6-6 6 6" stroke="#1E71E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 22v3a3 3 0 003 3h14a3 3 0 003-3v-3" stroke="#1E71E6" stroke-width="2"/></svg>
+            <div class="dropzone__hint">Выберите файл или перетащите его в эту зону</div>
+            <div class="dropzone__sub">Только PDF и DOC до 10 МБ</div>
+            <button class="dropzone__btn">📎 Выбрать файл</button>
+        </div>
+    </div>
+    <div class="right-panel__footer">
+        <button class="right-panel__btn right-panel__btn--secondary" data-close>Отменить</button>
+        <button class="right-panel__btn right-panel__btn--primary">Отправить</button>
+    </div>
+</aside>
+
+<aside class="right-panel" id="modal-ads">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Заявка на рекламу</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Жилой комплекс *</label><select class="right-panel__field-input"><option>Выберите ЖК</option></select></div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Комментарий</label><input class="right-panel__field-input" placeholder="Текст комментария"></div>
+    <div class="right-panel__field">
+        <label class="right-panel__field-label">Карточка организации *</label>
+        <div class="dropzone">
+            <svg class="dropzone__icon" viewBox="0 0 32 32" fill="none"><path d="M16 22V8M10 14l6-6 6 6" stroke="#1E71E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 22v3a3 3 0 003 3h14a3 3 0 003-3v-3" stroke="#1E71E6" stroke-width="2"/></svg>
+            <div class="dropzone__hint">Выберите файл или перетащите его в эту зону</div>
+            <div class="dropzone__sub">Только PDF и DOC до 10 МБ</div>
+            <button class="dropzone__btn">📎 Выбрать файл</button>
+        </div>
+    </div>
+    <div class="right-panel__footer">
+        <button class="right-panel__btn right-panel__btn--secondary" data-close>Отменить</button>
+        <button class="right-panel__btn right-panel__btn--primary">Отправить</button>
+    </div>
+</aside>
+
+<aside class="right-panel" id="modal-access">
+    <div class="right-panel__header">
+        <h2 class="right-panel__title">Заявка на ЖК</h2>
+        <button class="right-panel__close" data-close><svg viewBox="0 0 18 18"><path d="M4 4l10 10M14 4l-10 10" stroke="#828282" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="right-panel__field"><label class="right-panel__field-label">Жилой комплекс *</label><select class="right-panel__field-input"><option>Выберите ЖК</option></select></div>
+    <div class="right-panel__footer">
+        <button class="right-panel__btn right-panel__btn--secondary" data-close>Отменить</button>
+        <button class="right-panel__btn right-panel__btn--primary">Отправить</button>
+    </div>
+</aside>
+
+<div class="demo-bar">
+    <span>Открыть модалку:</span>
+    <button class="demo-btn" data-open="modal-detail-short">Данные о заявке (краткие)</button>
+    <button class="demo-btn" data-open="modal-detail-full">Данные о заявке (полные)</button>
+    <button class="demo-btn" data-open="modal-rooms">+Бронь квартиры</button>
+    <button class="demo-btn" data-open="modal-docs">+Документы</button>
+    <button class="demo-btn" data-open="modal-ads">+Реклама</button>
+    <button class="demo-btn" data-open="modal-access">+ЖК</button>
+</div>
+
+<script>
+const ARROW = '<svg viewBox="0 0 12 8" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.67 0L11.61.94 5.8 6.75 0 .94.94 0 5.8 4.86 10.67 0Z" fill="#828282"/></svg>';
+const ZHK_ARROW = '<svg class="zhk-select__arrow" viewBox="0 0 12 8" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.67 0L11.61.94 5.8 6.75 0 .94.94 0 5.8 4.86 10.67 0Z" fill="#1E71E6"/></svg>';
+const STATUS = {
+    waiting: `<div class="status-pill status-pill--waiting">На проверке</div>`,
+    approved: `<div class="status-pill status-pill--approved">Согласовано</div>`,
+    rejected: `<div class="status-pill status-pill--rejected">Отказано</div>`,
+};
+const FILE_BADGE = (n) => `<div class="files-badge"><svg viewBox="0 0 14 18" fill="none"><path d="M0 0h10l4 4v14H0V0z" stroke="#9CA3AF" stroke-width="1.2" fill="none"/></svg>${n}</div>`;
+const ZHK_LINK = (text) => `<div class="zhk-select"><span class="zhk-select__value">${text}</span>${ZHK_ARROW}</div>`;
+const COMMENT = (text) => `<div class="comment-cell"><span class="comment-cell__text">${text}</span><svg class="comment-cell__arrow" viewBox="0 0 8 12" fill="none"><path d="M0 1.5L1.5 0 7.5 6 1.5 12 0 10.5 4.5 6Z" fill="#9CA3AF"/></svg></div>`;
+const link = (id, modal='modal-detail-full') => `<span class="id-link" data-open="${modal}">${id}</span>`;
+
+const dataRooms = [
+    [2345,'17.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','waiting'],
+    [2344,'16.11.25','ЖК Holm, этаж 4, кв. № 25, 50 кв.м','Мастерс, Викторенко','ООО "Брокер Плюс"','Семёнов Семён Семёнович','8 916 200 11 03','approved'],
+    [2343,'15.11.25','ЖК Holm, этаж 5, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','waiting'],
+    [2342,'14.11.25','Capital Towers, ул. Строителей','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','rejected'],
+    [2341,'13.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','approved'],
+    [2340,'12.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','waiting'],
+    [2339,'11.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Константинопольский К.','8 916 200 11 03','rejected'],
+    [2338,'10.11.25','ЖК Holm, этаж 1, кв. № 25, 50 кв.м','Мастерс, Викторенко','Петров Петр Петрович','Семёнов Семён Семёнович','8 916 200 11 03','approved'],
+];
+const dataDocs = [[2345,'17.11.25','waiting',3],[2344,'16.11.25','approved',1],[2343,'15.11.25','rejected',1],[2342,'14.11.25','approved',3],[2341,'13.11.25','waiting',2],[2340,'12.11.25','waiting',3],[2339,'11.11.25','approved',1],[2338,'10.11.25','waiting',3],[2337,'09.11.25','waiting',2],[2336,'08.11.25','waiting',3],[2335,'07.11.25','waiting',1]];
+const dataAds = [[2345,'17.11.25','waiting',3,'Текст комментария'],[2344,'16.11.25','approved',1,'Очень длинный текст коммент...'],[2343,'15.11.25','rejected',1,'Текст комментария'],[2342,'14.11.25','approved',3,'Очень длинный текст коммент...'],[2341,'13.11.25','waiting',2,'Текст комментария'],[2340,'12.11.25','waiting',3,'Текст комментария']];
+const dataAccess = [[2345,'17.11.25','Мастерс, Викторенко','waiting'],[2344,'16.11.25','Мастерс, Викторен...','approved'],[2343,'15.11.25','Мастерс, Викторенко','rejected'],[2342,'14.11.25','Мастерс, Викторенко','approved'],[2341,'13.11.25','Бадаевский, Викто...','waiting'],[2340,'12.11.25','Мастерс, Викторенко','waiting'],[2339,'11.11.25','Мастерс, Викторен...','approved'],[2338,'10.11.25','Мастерс, Викторенко','approved']];
+
+document.getElementById('rooms-body').innerHTML = dataRooms.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${r[2]}</td><td class="table__cell">${ZHK_LINK(r[3])}</td><td class="table__cell">${r[4]}</td><td class="table__cell">${r[5]}</td><td class="table__cell table__cell--phone">${r[6]}</td><td class="table__cell">${STATUS[r[7]]}</td></tr>`).join('');
+document.getElementById('docs-body').innerHTML = dataDocs.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0],'modal-detail-short')}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${STATUS[r[2]]}</td><td class="table__cell">${FILE_BADGE(r[3])}</td></tr>`).join('');
+document.getElementById('ads-body').innerHTML = dataAds.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0])}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${STATUS[r[2]]}</td><td class="table__cell">${FILE_BADGE(r[3])}</td><td class="table__cell">${COMMENT(r[4])}</td></tr>`).join('');
+document.getElementById('access-body').innerHTML = dataAccess.map(r =>
+    `<tr class="table__row"><td class="table__cell">${link(r[0],'modal-detail-short')}</td><td class="table__cell">${r[1]}</td><td class="table__cell">${ZHK_LINK(r[2])}</td><td class="table__cell">${STATUS[r[3]]}</td></tr>`).join('');
+
+// Subtab switching
+document.querySelectorAll('.page-subtab').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.page-subtab').forEach(b => b.classList.toggle('is-active', b === btn));
+        const id = btn.dataset.tab;
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('is-active', p.dataset.pane === id));
+    });
+});
+
+// Modal openers (delegated)
+document.body.addEventListener('click', (e) => {
+    const open = e.target.closest('[data-open]');
+    if (open) { document.getElementById(open.dataset.open)?.classList.add('is-open'); return; }
+    const close = e.target.closest('[data-close]');
+    if (close) close.closest('.right-panel')?.classList.remove('is-open');
+});
+</script>
+</body>
+</html>

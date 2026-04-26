@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Персональные данные — брокер | Capital Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../site-css/vendor.css">
+    <link rel="stylesheet" href="../site-css/main.css">
+    <link rel="stylesheet" href="../site-css/custom.css">
+    <link rel="stylesheet" href="../site-css/brokers-template.css">
+    <style>
+    .top-nav { display: flex; gap: 48px; padding: 24px 48px; border-bottom: 1px solid #E5E7EB; background: #fff; }
+    .top-nav__link { position: relative; padding: 16px 0; font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 500; color: #939393; text-decoration: none; }
+    .top-nav__link.active-link { color: #005DAD; }
+    .top-nav__link.active-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #005DAD; }
+
+    .account-menu__user--company { background: #F9FAFB; border-radius: 16px; padding: 12px; }
+    .account-menu__user--company .account-menu__user-avatar { width: 56px; height: 56px; border-radius: 8px; background: #1E5C82; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 8px; font-weight: 700; }
+    .account-menu__user--company .account-menu__user-company { font-size: 11px; color: #828282; }
+    .account-menu__user--company .account-menu__user-name { font-size: 15px; font-weight: 600; color: #1F2937; }
+    .account-menu__link-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 100px; background: #1E71E6; color: #fff; font-size: 12px; font-weight: 500; }
+
+    /* Card data layout */
+    .data-card { background: #fff; border-radius: 24px; padding: 40px 48px; box-shadow: none; }
+    .data-card__title { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 22px; color: #005DAD; margin: 0 0 24px; }
+    .data-grid { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start; }
+    .data-logo { aspect-ratio: 1; border-radius: 24px; background: linear-gradient(135deg, #4A7BA8 0%, #1E5C82 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .data-logo__upload { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; font-size: 14px; opacity: 0; transition: opacity 0.2s; cursor: pointer; }
+    .data-logo:hover .data-logo__upload { opacity: 1; }
+    .data-logo__upload svg { width: 24px; height: 24px; }
+    .data-logo__placeholder { font-size: 32px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 4px; }
+
+    /* Field grid */
+    .data-fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 32px; }
+    .data-field { display: flex; flex-direction: column; gap: 8px; }
+    .data-field__label { color: #9CA3AF; font-size: 13px; }
+    .data-field__value { color: #1F2937; font-size: 15px; padding: 12px 0; }
+    .data-field__input { padding: 12px 16px; border: 1px solid #D1D5DB; border-radius: 12px; font-size: 15px; outline: none; }
+    .data-field__input:focus { border-color: #005DAD; }
+    .data-field--error .data-field__input { border-color: #E31F1F; background: rgba(227,31,31,0.03); }
+    .data-field__error-text { color: #E31F1F; font-size: 12px; }
+
+    /* Documents row */
+    .doc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+    .doc-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #E5E7EB; border-radius: 12px; background: #fff; }
+    .doc-chip svg { width: 24px; height: 24px; color: #1E71E6; flex-shrink: 0; }
+    .doc-chip__meta { display: flex; flex-direction: column; gap: 2px; }
+    .doc-chip__name { font-size: 13px; color: #1F2937; }
+    .doc-chip__size { font-size: 11px; color: #9CA3AF; }
+    .doc-chip__remove { background: none; border: 0; cursor: pointer; padding: 2px; color: #9CA3AF; }
+    .doc-chip__remove svg { width: 14px; height: 14px; }
+    .doc-add-btn { padding: 10px 20px; background: transparent; border: 1px solid #1E71E6; border-radius: 100px; color: #1E71E6; font-size: 14px; font-weight: 500; cursor: pointer; }
+
+    /* Manager card on right */
+    .layout-with-side { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+    .manager-card { background: #fff; border-radius: 24px; padding: 32px 28px; }
+    .manager-card__title { color: #005DAD; font-weight: 500; font-size: 18px; margin: 0 0 16px; }
+    .manager-card__name { color: #1F2937; font-weight: 500; font-size: 15px; margin: 0 0 4px; }
+    .manager-card__role { color: #828282; font-size: 13px; margin: 0 0 16px; }
+    .manager-card__contacts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .manager-card__contact { color: #1F2937; font-size: 14px; }
+    .manager-card__btn { display: block; width: 100%; padding: 14px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 14px; cursor: pointer; }
+
+    .save-btn { display: block; margin: 32px auto 0; padding: 16px 48px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 15px; cursor: pointer; }
+
+    .data-card__edit { position: absolute; top: 24px; right: 24px; background: none; border: 0; cursor: pointer; padding: 4px; }
+    .data-card__edit svg { width: 18px; height: 18px; color: #9CA3AF; }
+    .data-card { position: relative; }
+
+    /* Demo bar */
+    .demo-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; gap: 8px; justify-content: center; align-items: center; padding: 8px 16px; background: #1a1a2e; color: #fff; font-size: 12px; }
+    .demo-btn { padding: 4px 10px; border: 0; border-radius: 6px; background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; font-size: 11px; cursor: pointer; }
+    .demo-btn.active { background: #005DAD; }
+    .demo-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+    .state { display: none; }
+    .state.is-active { display: block; }
+
+    .account-part_profile { background: #F8F8F8; padding: 32px 48px 48px; }
+    </style>
+</head>
+<body class="page__body">
+
+<nav class="top-nav">
+    <a href="#" class="top-nav__link active-link">Персональные данные</a>
+    <a href="#" class="top-nav__link">Сотрудники</a>
+    <a href="#" class="top-nav__link">Клиенты</a>
+    <a href="#" class="top-nav__link">Заявки</a>
+    <a href="#" class="top-nav__link">Материалы</a>
+    <a href="#" class="top-nav__link">Спец. предложения</a>
+</nav>
+
+<main class="main">
+    <div class="account-layout account-layout_offers">
+        <div class="account-menu">
+            <div class="account-menu__top">
+                <a class="account-menu__logo" href="#"><svg width="190" height="36" viewBox="0 0 250 33" fill="none"><text x="0" y="26" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#0062A8" letter-spacing="1">CG CAPITAL GROUP</text></svg></a>
+                <div class="account-menu__user account-menu__user--company">
+                    <div class="account-menu__user-avatar">LEXRAOC</div>
+                    <div class="account-menu__user-right">
+                        <p class="account-menu__user-company">Компания</p>
+                        <p class="account-menu__user-name">ООО "Брокер Плюс"</p>
+                    </div>
+                </div>
+                <div class="account-menu__links">
+                    <a href="#" class="account-menu__link active-link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 7.5h20v15H5V7.5z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10v6H10V12z" fill="#939393"/></svg><div class="account-menu__link-text">Каталог объектов</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M7 4h12l4 4v18H7V4z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10M10 16h10M10 20h6" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Документы</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="9" cy="10" r="2" stroke="#939393" stroke-width="2" fill="none"/><circle cx="9" cy="20" r="2" stroke="#939393" stroke-width="2" fill="none"/><path d="M11 10h14M5 20h2M11 20h14" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Сравнение лотов</div><span class="account-menu__link-badge">2</span></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 6h20v14H5V6z" stroke="#939393" stroke-width="2" fill="none"/><path d="M9 11h12M9 15h8" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Новости</div></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 4a8 8 0 00-8 8v6l-2 3h20l-2-3v-6a8 8 0 00-8-8z" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Уведомления</div><span class="account-menu__link-badge">2</span></a>
+                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="11" r="4" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Профиль брокера</div></a>
+                </div>
+            </div>
+            <div class="account-menu__bottom">
+                <div class="account-menu__separator"></div>
+                <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="3" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Организация</div></a>
+                <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.62 9.63L15.73 13.75H2.5V16.25H15.73L11.62 20.37L13.38 22.13L20.52 15L13.38 7.87L11.62 9.63ZM25 2.5H20V5H25V25H20V27.5H25C26.38 27.5 27.5 26.38 27.5 25V5C27.5 3.62 26.38 2.5 25 2.5Z" fill="#939393"/></svg><div class="account-menu__link-text">Выйти из профиля</div></a>
+            </div>
+        </div>
+
+        <div class="account-part account-part_profile">
+            <h1 class="profile-client__top-section-title title" style="font-size: 40px; color: #005DAD; margin-bottom: 32px;">Данные организации</h1>
+
+            <!-- ===== STATE 1: VIEW (screen 15) ===== -->
+            <div class="state is-active" data-state="1">
+                <div class="layout-with-side">
+                    <div class="data-card">
+                        <button class="data-card__edit"><svg viewBox="0 0 18 18"><path d="M14 2l3 3-9 9H5v-3l9-9z" stroke="#9CA3AF" stroke-width="1.5" fill="none"/></svg></button>
+                        <h2 class="data-card__title">Юридическое лицо</h2>
+                        <div class="data-grid">
+                            <div class="data-logo"><span class="data-logo__placeholder">LEXRAOC</span></div>
+                            <div class="data-fields">
+                                <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
+                                <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
+                                <div class="data-field"><span class="data-field__label">Электронная почта</span><span class="data-field__value">ivan123@gmail.com</span></div>
+                                <div class="data-field"><span class="data-field__label">Телефон</span><span class="data-field__value">+7-800-800-80-80</span></div>
+                                <div class="data-field" style="grid-column: 1 / -1;">
+                                    <span class="data-field__label">Документы</span>
+                                    <div class="doc-row">
+                                        <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div></div>
+                                        <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
+                        <div class="data-fields">
+                            <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
+                            <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
+                            <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
+                            <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
+                        </div>
+                    </div>
+
+                    <aside class="manager-card">
+                        <h3 class="manager-card__title">Ваш менеджер</h3>
+                        <p class="manager-card__name">Константин<br>Константинопольский</p>
+                        <p class="manager-card__role">Менеджер</p>
+                        <div class="manager-card__contacts">
+                            <span class="manager-card__contact">+7 (800) 555 35 35</span>
+                            <span class="manager-card__contact">capitalgroup@capitalgroup.ru</span>
+                        </div>
+                        <button class="manager-card__btn">Задать вопрос</button>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- ===== STATE 2: EDIT WITH ERROR (screen 16) ===== -->
+            <div class="state" data-state="2">
+                <div class="data-card">
+                    <h2 class="data-card__title">Юридическое лицо</h2>
+                    <div class="data-grid">
+                        <div class="data-logo"><div class="data-logo__upload"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4M6 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Загрузить</div><span class="data-logo__placeholder">LEXRAOC</span></div>
+                        <div class="data-fields">
+                            <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
+                            <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
+                            <div class="data-field"><label class="data-field__label">Электронная почта</label><input class="data-field__input" value="ivan123@gmail.com"></div>
+                            <div class="data-field data-field--error"><label class="data-field__label">Телефон</label><input class="data-field__input" value="+7-800-800-80-8_"><span class="data-field__error-text">Неверный формат номера</span></div>
+                        </div>
+                    </div>
+                    <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
+                    <div class="data-fields">
+                        <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
+                        <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
+                        <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
+                        <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
+                    </div>
+                    <div class="data-field" style="margin-top: 24px;">
+                        <span class="data-field__label">Документы</span>
+                        <div class="doc-row">
+                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+                        </div>
+                    </div>
+                    <button class="save-btn">Сохранить изменения</button>
+                </div>
+            </div>
+
+            <!-- ===== STATE 3: EDIT WITH ADD-MORE (screen 17) ===== -->
+            <div class="state" data-state="3">
+                <div class="data-card">
+                    <h2 class="data-card__title">Юридическое лицо</h2>
+                    <div class="data-grid">
+                        <div class="data-logo"><div class="data-logo__upload"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4M6 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Загрузить</div><span class="data-logo__placeholder">LEXRAOC</span></div>
+                        <div class="data-fields">
+                            <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
+                            <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
+                            <div class="data-field"><label class="data-field__label">Электронная почта</label><input class="data-field__input" value="ivan123@gmail.com"></div>
+                            <div class="data-field data-field--error"><label class="data-field__label">Телефон</label><input class="data-field__input" value="+7-800-800-80-8_"><span class="data-field__error-text">Неверный формат номера</span></div>
+                        </div>
+                    </div>
+                    <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
+                    <div class="data-fields">
+                        <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
+                        <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
+                        <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
+                        <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
+                    </div>
+                    <div class="data-field" style="margin-top: 24px;">
+                        <span class="data-field__label">Документы</span>
+                        <div class="doc-row">
+                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+                            <button class="doc-add-btn">Добавить ещё</button>
+                        </div>
+                    </div>
+                    <button class="save-btn">Сохранить изменения</button>
+                </div>
+            </div>
+
+            <div class="account-footer">© Capital Group, 2025. Личный кабинет брокера</div>
+        </div>
+    </div>
+</main>
+
+<div class="demo-bar">
+    <span>Состояния:</span>
+    <button class="demo-btn active" data-state="1">1. Просмотр</button>
+    <button class="demo-btn" data-state="2">2. Редактирование (ошибка)</button>
+    <button class="demo-btn" data-state="3">3. Редактирование (Добавить ещё)</button>
+</div>
+
+<script>
+document.querySelectorAll('.demo-btn[data-state]').forEach(b => {
+    b.addEventListener('click', () => {
+        const n = b.dataset.state;
+        document.querySelectorAll('.demo-btn[data-state]').forEach(x => x.classList.toggle('active', x === b));
+        document.querySelectorAll('.state').forEach(s => s.classList.toggle('is-active', s.dataset.state === n));
+    });
+});
+</script>
+</body>
+</html>
