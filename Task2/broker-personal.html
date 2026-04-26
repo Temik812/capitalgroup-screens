@@ -4,83 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Персональные данные — брокер | Capital Group</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Inter:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../site-css/vendor.css">
     <link rel="stylesheet" href="../site-css/main.css">
     <link rel="stylesheet" href="../site-css/custom.css">
     <link rel="stylesheet" href="../site-css/brokers-template.css">
     <style>
+    .account-menu__link.active-link .account-menu__link-img path[stroke] { stroke: var(--brand-blue); }
+
+    /* Top horizontal nav (Брокер: Персональные данные / Сотрудники / Клиенты / Заявки / Материалы / Спец.предложения). */
     .top-nav { display: flex; gap: 48px; padding: 24px 48px; border-bottom: 1px solid #E5E7EB; background: #fff; }
     .top-nav__link { position: relative; padding: 16px 0; font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 500; color: #939393; text-decoration: none; }
     .top-nav__link.active-link { color: #005DAD; }
     .top-nav__link.active-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #005DAD; }
+    .top-nav__link:hover { color: #005DAD; }
 
+    /* Brand-card в сайдбаре (компания + ее лого). */
     .account-menu__user--company { background: #F9FAFB; border-radius: 16px; padding: 12px; }
-    .account-menu__user--company .account-menu__user-avatar { width: 56px; height: 56px; border-radius: 8px; background: #1E5C82; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 8px; font-weight: 700; }
+    .account-menu__user--company .account-menu__user-avatar { width: 56px; height: 56px; border-radius: 8px; background: #1E5C82; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .account-menu__user--company .account-menu__user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
     .account-menu__user--company .account-menu__user-company { font-size: 11px; color: #828282; }
     .account-menu__user--company .account-menu__user-name { font-size: 15px; font-weight: 600; color: #1F2937; }
     .account-menu__link-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 100px; background: #1E71E6; color: #fff; font-size: 12px; font-weight: 500; }
 
-    /* Card data layout */
-    .data-card { background: #fff; border-radius: 24px; padding: 40px 48px; box-shadow: none; }
-    .data-card__title { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 22px; color: #005DAD; margin: 0 0 24px; }
-    .data-grid { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: start; }
-    .data-logo { aspect-ratio: 1; border-radius: 24px; background: linear-gradient(135deg, #4A7BA8 0%, #1E5C82 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .data-logo__upload { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; font-size: 14px; opacity: 0; transition: opacity 0.2s; cursor: pointer; }
-    .data-logo:hover .data-logo__upload { opacity: 1; }
-    .data-logo__upload svg { width: 24px; height: 24px; }
-    .data-logo__placeholder { font-size: 32px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 4px; }
+    /* Заголовок страницы. */
+    .page-title { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 40px; color: #005DAD; margin: 24px 0 32px; line-height: 1.1; }
 
-    /* Field grid */
-    .data-fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 32px; }
-    .data-field { display: flex; flex-direction: column; gap: 8px; }
-    .data-field__label { color: #9CA3AF; font-size: 13px; }
-    .data-field__value { color: #1F2937; font-size: 15px; padding: 12px 0; }
-    .data-field__input { padding: 12px 16px; border: 1px solid #D1D5DB; border-radius: 12px; font-size: 15px; outline: none; }
-    .data-field__input:focus { border-color: #005DAD; }
-    .data-field--error .data-field__input { border-color: #E31F1F; background: rgba(227,31,31,0.03); }
-    .data-field__error-text { color: #E31F1F; font-size: 12px; }
-
-    /* Documents row */
-    .doc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
-    .doc-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #E5E7EB; border-radius: 12px; background: #fff; }
-    .doc-chip svg { width: 24px; height: 24px; color: #1E71E6; flex-shrink: 0; }
-    .doc-chip__meta { display: flex; flex-direction: column; gap: 2px; }
-    .doc-chip__name { font-size: 13px; color: #1F2937; }
-    .doc-chip__size { font-size: 11px; color: #9CA3AF; }
-    .doc-chip__remove { background: none; border: 0; cursor: pointer; padding: 2px; color: #9CA3AF; }
-    .doc-chip__remove svg { width: 14px; height: 14px; }
-    .doc-add-btn { padding: 10px 20px; background: transparent; border: 1px solid #1E71E6; border-radius: 100px; color: #1E71E6; font-size: 14px; font-weight: 500; cursor: pointer; }
-
-    /* Manager card on right */
-    .layout-with-side { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
-    .manager-card { background: #fff; border-radius: 24px; padding: 32px 28px; }
-    .manager-card__title { color: #005DAD; font-weight: 500; font-size: 18px; margin: 0 0 16px; }
-    .manager-card__name { color: #1F2937; font-weight: 500; font-size: 15px; margin: 0 0 4px; }
-    .manager-card__role { color: #828282; font-size: 13px; margin: 0 0 16px; }
-    .manager-card__contacts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-    .manager-card__contact { color: #1F2937; font-size: 14px; }
-    .manager-card__btn { display: block; width: 100%; padding: 14px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 14px; cursor: pointer; }
-
-    .save-btn { display: block; margin: 32px auto 0; padding: 16px 48px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 15px; cursor: pointer; }
-
-    .data-card__edit { position: absolute; top: 24px; right: 24px; background: none; border: 0; cursor: pointer; padding: 4px; }
-    .data-card__edit svg { width: 18px; height: 18px; color: #9CA3AF; }
-    .data-card { position: relative; }
-
-    /* Demo bar */
-    .demo-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; gap: 8px; justify-content: center; align-items: center; padding: 8px 16px; background: #1a1a2e; color: #fff; font-size: 12px; }
-    .demo-btn { padding: 4px 10px; border: 0; border-radius: 6px; background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; font-size: 11px; cursor: pointer; }
-    .demo-btn.active { background: #005DAD; }
-    .demo-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+    /* Состояния страницы. */
     .state { display: none; }
     .state.is-active { display: block; }
 
-    .account-part_profile { background: #F8F8F8; padding: 32px 48px 48px; }
+    /* ==== STATE 1: VIEW (двухколоночный — карточка данных + менеджер справа) ==== */
+    .state-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; }
+
+    .data-card { position: relative; background: #fff; border-radius: 24px; padding: 40px 48px 48px; }
+    .data-card__edit { position: absolute; top: 28px; right: 28px; background: none; border: 0; cursor: pointer; padding: 4px; line-height: 0; }
+    .data-card__edit svg { width: 28px; height: 28px; }
+    .data-card__title { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 22px; color: #005DAD; margin: 0 0 28px; }
+    .data-card__title--secondary { margin-top: 36px; padding-top: 32px; border-top: 1px solid #F0F0F0; }
+
+    /* Сетка для view-mode: лого слева 320×320, поля справа в 2 колонки. */
+    .org-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start; }
+
+    .org-logo { width: 320px; height: 320px; border-radius: 24px; background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('icons/personal/logo-bg-lexraoc.png'); background-size: cover; background-position: center; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .org-logo__text { color: #fff; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: 4px; opacity: 0.95; }
+    .org-logo__overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: rgba(0,0,0,0.55); opacity: 0; transition: opacity 0.2s; }
+    .org-logo:hover .org-logo__overlay { opacity: 1; }
+    .org-logo__action { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; cursor: pointer; }
+    .org-logo__action svg { width: 28px; height: 28px; }
+    .org-logo__action--del { color: #fff; }
+    .org-logo__action--del svg path { fill: #E31F1F; }
+
+    /* Поля. */
+    .data-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+    .data-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .data-field__label { color: #9CA3AF; font-family: 'Inter', sans-serif; font-size: 13px; }
+    .data-field__value { color: #1F2937; font-family: 'Inter', sans-serif; font-size: 15px; padding: 4px 0; }
+
+    /* Документы — chips (без × в view-mode). */
+    .docs-block { grid-column: 1 / -1; margin-top: 4px; }
+    .docs-block__label { color: #9CA3AF; font-family: 'Inter', sans-serif; font-size: 13px; margin-bottom: 10px; }
+    .doc-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .doc-chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid #E5E7EB; border-radius: 12px; background: #F8F8F8; }
+    .doc-chip__icon { width: 28px; height: 28px; flex-shrink: 0; }
+    .doc-chip__meta { display: flex; flex-direction: column; gap: 2px; line-height: 1.1; }
+    .doc-chip__name { font-family: 'Inter', sans-serif; font-size: 13px; color: #1F2937; }
+    .doc-chip__size { font-family: 'Inter', sans-serif; font-size: 11px; color: #9CA3AF; }
+    .doc-chip__remove { background: none; border: 0; padding: 0 0 0 6px; cursor: pointer; color: #9CA3AF; line-height: 0; flex-shrink: 0; }
+    .doc-chip__remove svg { width: 16px; height: 16px; }
+
+    /* Менеджер-карточка справа. */
+    .manager-card { background: #fff; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+    .manager-card__title { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 18px; color: #005DAD; margin: 0; }
+    .manager-card__row { display: flex; gap: 16px; align-items: flex-start; }
+    .manager-card__avatar { width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0; overflow: hidden; background: #E5E7EB; }
+    .manager-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .manager-card__name { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; color: #1F2937; line-height: 1.3; }
+    .manager-card__role { font-family: 'Inter', sans-serif; font-size: 13px; color: #9CA3AF; margin-top: 4px; }
+    .manager-card__contacts { display: flex; flex-direction: column; gap: 6px; }
+    .manager-card__phone { font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 17px; color: #1F2937; text-decoration: none; }
+    .manager-card__email { font-family: 'Inter', sans-serif; font-size: 14px; color: #1F2937; text-decoration: underline; }
+    .manager-card__btn { display: inline-flex; align-items: center; justify-content: center; padding: 16px 24px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 15px; cursor: pointer; text-decoration: none; }
+    .manager-card__btn:hover { background: #004b8d; }
+    .manager-card__hint { font-family: 'Inter', sans-serif; font-size: 12px; color: #6B7280; line-height: 1.5; }
+    .manager-card__hint a { color: #005DAD; text-decoration: underline; }
+
+    /* ==== STATE 2 / 3: EDIT — single-column data card (без менеджера) ==== */
+    .state-single .data-card { width: 100%; }
+    .data-fields--edit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; align-items: start; }
+    .data-field--input { gap: 8px; }
+    .data-field__hint-color { color: #0062A8; font-family: 'Inter', sans-serif; font-size: 14px; }
+    .data-field__input { padding: 14px 24px; border: 1px solid #CCCCCC; border-radius: 100px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1F2937; outline: none; background: #fff; width: 100%; }
+    .data-field__input:focus { border-color: #005DAD; }
+    .data-field--error .data-field__input { border-color: #E31F1F; background: rgba(227,31,31,0.03); color: #E31F1F; }
+    .data-field--error .data-field__hint-color { color: #0062A8; }
+    .data-field__error-text { color: #E31F1F; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 2px; }
+
+    /* Документы в edit-mode (с ×). */
+    .docs-edit { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .doc-chip--edit { background: #F8F8F8; }
+
+    /* Кнопки. */
+    .save-btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px 48px; background: #005DAD; color: #fff; border: 0; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 16px; cursor: pointer; }
+    .save-btn:hover { background: #004b8d; }
+    .save-row { display: flex; justify-content: center; margin-top: 36px; }
+
+    .add-more-btn { display: inline-flex; align-items: center; padding: 12px 28px; background: #fff; color: #1E71E6; border: 1px solid #1E71E6; border-radius: 100px; font-family: 'Manrope', sans-serif; font-weight: 500; font-size: 15px; cursor: pointer; }
+    .add-more-btn:hover { background: rgba(30,113,230,0.06); }
+
+    /* Поддержка-подсказка под формой (в State 1). */
+    .support-hint { display: block; margin-top: 24px; color: #6B7280; font-family: 'Inter', sans-serif; font-size: 12px; }
+    .support-hint a { color: #005DAD; text-decoration: underline; }
+
+    /* Demo-бар. */
+    .demo-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; padding: 8px 16px; background: #1a1a2e; color: #fff; font-size: 12px; }
+    .demo-btn { padding: 6px 14px; border: 0; border-radius: 6px; background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; font-size: 11px; cursor: pointer; }
+    .demo-btn.active { background: #005DAD; }
+    .demo-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+
+    body { padding-bottom: 60px; }
     </style>
 </head>
 <body class="page__body">
 
+<!-- ====== ВЕРХНЯЯ ГОРИЗОНТАЛЬНАЯ НАВИГАЦИЯ ====== -->
 <nav class="top-nav">
     <a href="#" class="top-nav__link active-link">Персональные данные</a>
     <a href="#" class="top-nav__link">Сотрудники</a>
@@ -92,162 +139,375 @@
 
 <main class="main">
     <div class="account-layout account-layout_offers">
+        <!-- ====== САЙДБАР ====== -->
         <div class="account-menu">
             <div class="account-menu__top">
-                <a class="account-menu__logo" href="#"><svg width="190" height="36" viewBox="0 0 250 33" fill="none"><text x="0" y="26" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#0062A8" letter-spacing="1">CG CAPITAL GROUP</text></svg></a>
+                <a class="account-menu__logo" href="#">
+                    <svg width="190" height="36" viewBox="0 0 250 33" fill="none"><text x="0" y="26" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#0062A8" letter-spacing="1">CG CAPITAL GROUP</text></svg>
+                </a>
                 <div class="account-menu__user account-menu__user--company">
-                    <div class="account-menu__user-avatar">LEXRAOC</div>
+                    <div class="account-menu__user-avatar">
+                        <svg viewBox="0 0 56 56" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="56" height="56" fill="#1E5C82"/>
+                            <path d="M28 12L42 22L42 38L28 48L14 38L14 22Z" fill="#3B7BA8" opacity="0.6"/>
+                            <text x="28" y="35" text-anchor="middle" font-family="Manrope, sans-serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.5">LEXRAOC</text>
+                        </svg>
+                    </div>
                     <div class="account-menu__user-right">
                         <p class="account-menu__user-company">Компания</p>
                         <p class="account-menu__user-name">ООО "Брокер Плюс"</p>
                     </div>
                 </div>
                 <div class="account-menu__links">
-                    <a href="#" class="account-menu__link active-link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 7.5h20v15H5V7.5z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10v6H10V12z" fill="#939393"/></svg><div class="account-menu__link-text">Каталог объектов</div></a>
-                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M7 4h12l4 4v18H7V4z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10M10 16h10M10 20h6" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Документы</div></a>
-                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="9" cy="10" r="2" stroke="#939393" stroke-width="2" fill="none"/><circle cx="9" cy="20" r="2" stroke="#939393" stroke-width="2" fill="none"/><path d="M11 10h14M5 20h2M11 20h14" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Сравнение лотов</div><span class="account-menu__link-badge">2</span></a>
-                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 6h20v14H5V6z" stroke="#939393" stroke-width="2" fill="none"/><path d="M9 11h12M9 15h8" stroke="#939393" stroke-width="2"/></svg><div class="account-menu__link-text">Новости</div></a>
-                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 4a8 8 0 00-8 8v6l-2 3h20l-2-3v-6a8 8 0 00-8-8z" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Уведомления</div><span class="account-menu__link-badge">2</span></a>
-                    <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="11" r="4" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Профиль брокера</div></a>
+                    <a href="#" class="account-menu__link active-link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 7.5h20v15H5V7.5z" stroke="#005DAD" stroke-width="2" fill="none"/><path d="M10 12h10v6H10V12z" fill="#005DAD"/></svg>
+                        <div class="account-menu__link-text">Каталог объектов</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M7 4h12l4 4v18H7V4z" stroke="#939393" stroke-width="2" fill="none"/><path d="M10 12h10M10 16h10M10 20h6" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Документы</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="9" cy="10" r="2" stroke="#939393" stroke-width="2" fill="none"/><circle cx="9" cy="20" r="2" stroke="#939393" stroke-width="2" fill="none"/><path d="M11 10h14M5 20h2M11 20h14" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Сравнение лотов</div>
+                        <span class="account-menu__link-badge">2</span>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 6h20v14H5V6z" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25h12a3 3 0 003-3v-2H5v5z" fill="#939393"/><path d="M9 11h12M9 15h8" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Новости</div>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 4a8 8 0 00-8 8v6l-2 3h20l-2-3v-6a8 8 0 00-8-8z" stroke="#939393" stroke-width="2" fill="none"/><path d="M12 24a3 3 0 006 0" stroke="#939393" stroke-width="2"/></svg>
+                        <div class="account-menu__link-text">Уведомления</div>
+                        <span class="account-menu__link-badge">2</span>
+                    </a>
+                    <a href="#" class="account-menu__link">
+                        <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="11" r="4" stroke="#939393" stroke-width="2" fill="none"/><path d="M5 25c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#939393" stroke-width="2" fill="none"/></svg>
+                        <div class="account-menu__link-text">Профиль брокера</div>
+                    </a>
                 </div>
             </div>
             <div class="account-menu__bottom">
                 <div class="account-menu__separator"></div>
-                <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="3" stroke="#939393" stroke-width="2" fill="none"/></svg><div class="account-menu__link-text">Организация</div></a>
-                <a href="#" class="account-menu__link"><svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.62 9.63L15.73 13.75H2.5V16.25H15.73L11.62 20.37L13.38 22.13L20.52 15L13.38 7.87L11.62 9.63ZM25 2.5H20V5H25V25H20V27.5H25C26.38 27.5 27.5 26.38 27.5 25V5C27.5 3.62 26.38 2.5 25 2.5Z" fill="#939393"/></svg><div class="account-menu__link-text">Выйти из профиля</div></a>
+                <a href="#" class="account-menu__link">
+                    <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="3" stroke="#939393" stroke-width="2" fill="none"/><path d="M15 4v3M15 23v3M4 15h3M23 15h3M7 7l2 2M21 21l2 2M21 9l2-2M7 23l2-2" stroke="#939393" stroke-width="2"/></svg>
+                    <div class="account-menu__link-text">Организация</div>
+                </a>
+                <a href="#" class="account-menu__link">
+                    <svg class="account-menu__link-img" width="30" height="30" viewBox="0 0 30 30" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.62 9.63L15.73 13.75H2.5V16.25H15.73L11.62 20.37L13.38 22.13L20.52 15L13.38 7.87L11.62 9.63ZM25 2.5H20V5H25V25H20V27.5H25C26.38 27.5 27.5 26.38 27.5 25V5C27.5 3.62 26.38 2.5 25 2.5Z" fill="#939393"/></svg>
+                    <div class="account-menu__link-text">Выйти из профиля</div>
+                </a>
             </div>
         </div>
 
+        <!-- ====== ОСНОВНАЯ ОБЛАСТЬ ====== -->
         <div class="account-part account-part_profile">
-            <h1 class="profile-client__top-section-title title" style="font-size: 40px; color: #005DAD; margin-bottom: 32px;">Данные организации</h1>
+            <h1 class="page-title">Данные организации</h1>
 
-            <!-- ===== STATE 1: VIEW (screen 15) ===== -->
-            <div class="state is-active" data-state="1">
-                <div class="layout-with-side">
+            <!-- ====== STATE 1: VIEW MODE ====== -->
+            <section class="state state--view is-active" data-state="view">
+                <div class="state-grid">
                     <div class="data-card">
-                        <button class="data-card__edit"><svg viewBox="0 0 18 18"><path d="M14 2l3 3-9 9H5v-3l9-9z" stroke="#9CA3AF" stroke-width="1.5" fill="none"/></svg></button>
+                        <button class="data-card__edit" aria-label="Редактировать" data-go-state="edit">
+                            <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 25V16.25H25V25H5V5H13.75V2.5H5C3.61929 2.5 2.5 3.61929 2.5 5V25C2.5 26.3807 3.61929 27.5 5 27.5H25C26.3807 27.5 27.5 26.3807 27.5 25ZM23.9726 3.40428C23.3997 2.82677 22.6151 2.5 21.7967 2.5C20.9792 2.5 20.1955 2.82604 19.6192 3.40579L9.15812 13.8668C8.22333 14.6904 7.61055 15.916 7.50406 17.2341L7.5 21.2529V22.5029H12.6683C14.0861 22.4057 15.3238 21.7869 16.1969 20.7797L26.5988 10.3823C27.1759 9.8052 27.5001 9.02249 27.5001 8.20635C27.5001 7.39021 27.1759 6.6075 26.5988 6.0304L23.9726 3.40428ZM12.58 20.006C13.2478 19.9588 13.8694 19.648 14.3685 19.077L21.9459 11.4996L18.503 8.05658L10.8701 15.687C10.3637 16.1349 10.0504 16.7615 10 17.3348V20.0037L12.58 20.006ZM20.2711 6.2891L23.7136 9.73188L24.831 8.61453C24.9392 8.50627 25.0001 8.35945 25.0001 8.20635C25.0001 8.05325 24.9392 7.90643 24.831 7.79817L22.2014 5.16857C22.0944 5.06068 21.9487 5 21.7967 5C21.6447 5 21.499 5.06068 21.392 5.16857L20.2711 6.2891Z" fill="#005DAD" fill-opacity="0.45"/>
+                            </svg>
+                        </button>
+
                         <h2 class="data-card__title">Юридическое лицо</h2>
-                        <div class="data-grid">
-                            <div class="data-logo"><span class="data-logo__placeholder">LEXRAOC</span></div>
+
+                        <div class="org-grid">
+                            <div class="org-logo" title="Логотип организации">
+                                <span class="org-logo__text">LEXRAOC</span>
+                                <div class="org-logo__overlay">
+                                    <span class="org-logo__action">
+                                        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 13.75V5C8.75 3.61929 9.86929 2.5 11.25 2.5H18.75C20.1307 2.5 21.25 3.61929 21.25 5L21.25 8.75L21.25 13.75H27.5L15 24.4808L2.5 13.75H8.75ZM18.75 5L18.75 8.75L18.75 13.75L18.75 16.25H20.3709L15 21.1881L9.62907 16.25H11.25L11.25 13.75L11.25 8.75L11.25 5H18.75ZM23.75 27.5C25.1307 27.5 26.25 26.3807 26.25 25H3.75C3.75 26.3807 4.86929 27.5 6.25 27.5H23.75Z" fill="#fff"/>
+                                        </svg>
+                                        Загрузить
+                                    </span>
+                                    <span class="org-logo__action">
+                                        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 1.25H18.75C20.1307 1.25 21.25 2.36929 21.25 3.75V5H25C26.3807 5 27.5 6.11929 27.5 7.5V10C27.5 11.3807 26.3807 12.5 25 12.5H24.8998L23.75 26.25C23.75 27.6307 22.6307 28.75 21.25 28.75H8.74996C7.36925 28.75 6.24996 27.6307 6.25428 26.3538L5.0998 12.5H5C3.61929 12.5 2.5 11.3807 2.5 10V7.5C2.5 6.11929 3.61929 5 5 5H8.75V3.75C8.75 2.36929 9.86929 1.25 11.25 1.25ZM5 7.5H8.75H21.25H25V10H5V7.5ZM7.60809 12.5H22.3915L21.2543 26.1462L21.25 26.25H8.74998L7.60809 12.5ZM18.75 3.75V5H11.25V3.75H18.75Z" fill="#E31F1F"/>
+                                        </svg>
+                                        Удалить
+                                    </span>
+                                </div>
+                            </div>
+
                             <div class="data-fields">
-                                <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
-                                <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
-                                <div class="data-field"><span class="data-field__label">Электронная почта</span><span class="data-field__value">ivan123@gmail.com</span></div>
-                                <div class="data-field"><span class="data-field__label">Телефон</span><span class="data-field__value">+7-800-800-80-80</span></div>
-                                <div class="data-field" style="grid-column: 1 / -1;">
-                                    <span class="data-field__label">Документы</span>
+                                <div class="data-field">
+                                    <span class="data-field__label">Наименование юр. лица</span>
+                                    <span class="data-field__value">ООО Брокер</span>
+                                </div>
+                                <div class="data-field">
+                                    <span class="data-field__label">ИНН</span>
+                                    <span class="data-field__value">1234567891</span>
+                                </div>
+                                <div class="data-field">
+                                    <span class="data-field__label">Электронная почта</span>
+                                    <span class="data-field__value">ivan123@gmail.com</span>
+                                </div>
+                                <div class="data-field">
+                                    <span class="data-field__label">Телефон</span>
+                                    <span class="data-field__value">+7-800-800-80-80</span>
+                                </div>
+
+                                <div class="docs-block">
+                                    <div class="docs-block__label">Документы</div>
                                     <div class="doc-row">
-                                        <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div></div>
-                                        <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div></div>
+                                        <div class="doc-chip">
+                                            <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#1E71E6" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#1E71E6" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#1E71E6">PDF</text></svg>
+                                            <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                        </div>
+                                        <div class="doc-chip">
+                                            <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#9CA3AF" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#9CA3AF" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#9CA3AF">DOC</text></svg>
+                                            <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                        </div>
+                                        <div class="doc-chip">
+                                            <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#9CA3AF" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#9CA3AF" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#9CA3AF">PNG</text></svg>
+                                            <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
-                        <div class="data-fields">
-                            <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
-                            <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
-                            <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
-                            <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
+
+                        <h2 class="data-card__title data-card__title--secondary">Данные руководителя</h2>
+                        <div class="data-fields" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+                            <div class="data-field">
+                                <span class="data-field__label">Фамилия</span>
+                                <span class="data-field__value">Иванов</span>
+                            </div>
+                            <div class="data-field">
+                                <span class="data-field__label">Имя</span>
+                                <span class="data-field__value">Иван</span>
+                            </div>
+                            <div class="data-field">
+                                <span class="data-field__label">Отчество</span>
+                                <span class="data-field__value">Иванович</span>
+                            </div>
+                            <div class="data-field">
+                                <span class="data-field__label">Должность</span>
+                                <span class="data-field__value">Ген. директор</span>
+                            </div>
                         </div>
+
+                        <span class="support-hint">Для изменения данных или смены юр.лица обратитесь в <a href="#">поддержку</a></span>
                     </div>
 
+                    <!-- Менеджер-карточка справа. -->
                     <aside class="manager-card">
                         <h3 class="manager-card__title">Ваш менеджер</h3>
-                        <p class="manager-card__name">Константин<br>Константинопольский</p>
-                        <p class="manager-card__role">Менеджер</p>
+                        <div class="manager-card__row">
+                            <div class="manager-card__avatar">
+                                <img src="icons/personal/manager-avatar.png" alt="Менеджер">
+                            </div>
+                            <div>
+                                <div class="manager-card__name">Константин<br>Константинович<br>Константинопольский</div>
+                                <div class="manager-card__role">Менеджер</div>
+                            </div>
+                        </div>
                         <div class="manager-card__contacts">
-                            <span class="manager-card__contact">+7 (800) 555 35 35</span>
-                            <span class="manager-card__contact">capitalgroup@capitalgroup.ru</span>
+                            <a class="manager-card__phone" href="tel:+78005553535">+7 (800) 555 35 35</a>
+                            <a class="manager-card__email" href="mailto:capitalgroup@capitalgroup.ru">capitalgroup@capitalgroup.ru</a>
                         </div>
                         <button class="manager-card__btn">Задать вопрос</button>
                     </aside>
                 </div>
-            </div>
+            </section>
 
-            <!-- ===== STATE 2: EDIT WITH ERROR (screen 16) ===== -->
-            <div class="state" data-state="2">
+            <!-- ====== STATE 2: EDIT MODE WITH ERROR ====== -->
+            <section class="state state--edit-error state-single" data-state="edit-error">
                 <div class="data-card">
                     <h2 class="data-card__title">Юридическое лицо</h2>
-                    <div class="data-grid">
-                        <div class="data-logo"><div class="data-logo__upload"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4M6 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Загрузить</div><span class="data-logo__placeholder">LEXRAOC</span></div>
-                        <div class="data-fields">
-                            <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
-                            <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
-                            <div class="data-field"><label class="data-field__label">Электронная почта</label><input class="data-field__input" value="ivan123@gmail.com"></div>
-                            <div class="data-field data-field--error"><label class="data-field__label">Телефон</label><input class="data-field__input" value="+7-800-800-80-8_"><span class="data-field__error-text">Неверный формат номера</span></div>
+
+                    <div class="org-grid">
+                        <div class="org-logo">
+                            <span class="org-logo__text">LEXRAOC</span>
+                            <div class="org-logo__overlay" style="opacity: 1;">
+                                <span class="org-logo__action">
+                                    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 13.75V5C8.75 3.61929 9.86929 2.5 11.25 2.5H18.75C20.1307 2.5 21.25 3.61929 21.25 5L21.25 8.75L21.25 13.75H27.5L15 24.4808L2.5 13.75H8.75ZM18.75 5L18.75 8.75L18.75 13.75L18.75 16.25H20.3709L15 21.1881L9.62907 16.25H11.25L11.25 13.75L11.25 8.75L11.25 5H18.75ZM23.75 27.5C25.1307 27.5 26.25 26.3807 26.25 25H3.75C3.75 26.3807 4.86929 27.5 6.25 27.5H23.75Z" fill="#fff"/>
+                                    </svg>
+                                    Загрузить
+                                </span>
+                                <span class="org-logo__action">
+                                    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 1.25H18.75C20.1307 1.25 21.25 2.36929 21.25 3.75V5H25C26.3807 5 27.5 6.11929 27.5 7.5V10C27.5 11.3807 26.3807 12.5 25 12.5H24.8998L23.75 26.25C23.75 27.6307 22.6307 28.75 21.25 28.75H8.74996C7.36925 28.75 6.24996 27.6307 6.25428 26.3538L5.0998 12.5H5C3.61929 12.5 2.5 11.3807 2.5 10V7.5C2.5 6.11929 3.61929 5 5 5H8.75V3.75C8.75 2.36929 9.86929 1.25 11.25 1.25ZM5 7.5H8.75H21.25H25V10H5V7.5ZM7.60809 12.5H22.3915L21.2543 26.1462L21.25 26.25H8.74998L7.60809 12.5ZM18.75 3.75V5H11.25V3.75H18.75Z" fill="#E31F1F"/>
+                                    </svg>
+                                    Удалить
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="data-fields data-fields--edit">
+                            <div class="data-field">
+                                <span class="data-field__label">Наименование юр. лица</span>
+                                <span class="data-field__value">ООО Брокер</span>
+                            </div>
+                            <div class="data-field">
+                                <span class="data-field__label">ИНН</span>
+                                <span class="data-field__value">1234567891</span>
+                            </div>
+                            <div class="data-field data-field--input">
+                                <span class="data-field__hint-color">Электронная почта</span>
+                                <input type="email" class="data-field__input" value="ivan123@gmail.com">
+                            </div>
+                            <div class="data-field data-field--input data-field--error">
+                                <span class="data-field__hint-color">Телефон</span>
+                                <input type="tel" class="data-field__input" value="+7-800-800-80-8_">
+                                <span class="data-field__error-text">Неверный формат номера</span>
+                            </div>
                         </div>
                     </div>
-                    <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
-                    <div class="data-fields">
+
+                    <h2 class="data-card__title data-card__title--secondary">Данные руководителя</h2>
+                    <div class="data-fields" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
                         <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
                         <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
                         <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
                         <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
                     </div>
-                    <div class="data-field" style="margin-top: 24px;">
-                        <span class="data-field__label">Документы</span>
-                        <div class="doc-row">
-                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+
+                    <div class="docs-block" style="margin-top: 32px;">
+                        <div class="docs-block__label">Документы</div>
+                        <div class="docs-edit">
+                            <div class="doc-chip doc-chip--edit">
+                                <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#1E71E6" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#1E71E6" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#1E71E6">PDF</text></svg>
+                                <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                <button class="doc-chip__remove" aria-label="Удалить"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                            </div>
+                            <div class="doc-chip doc-chip--edit">
+                                <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#9CA3AF" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#9CA3AF" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#9CA3AF">DOC</text></svg>
+                                <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                <button class="doc-chip__remove" aria-label="Удалить"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                            </div>
+                            <div class="doc-chip doc-chip--edit">
+                                <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#9CA3AF" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#9CA3AF" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#9CA3AF">PNG</text></svg>
+                                <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                <button class="doc-chip__remove" aria-label="Удалить"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                            </div>
                         </div>
                     </div>
-                    <button class="save-btn">Сохранить изменения</button>
-                </div>
-            </div>
 
-            <!-- ===== STATE 3: EDIT WITH ADD-MORE (screen 17) ===== -->
-            <div class="state" data-state="3">
+                    <div class="save-row">
+                        <button class="save-btn">Сохранить изменения</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== STATE 3: EDIT MODE WITH "ДОБАВИТЬ ЕЩЁ" ====== -->
+            <section class="state state--edit-add state-single" data-state="edit-add">
                 <div class="data-card">
                     <h2 class="data-card__title">Юридическое лицо</h2>
-                    <div class="data-grid">
-                        <div class="data-logo"><div class="data-logo__upload"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4M6 10l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Загрузить</div><span class="data-logo__placeholder">LEXRAOC</span></div>
-                        <div class="data-fields">
-                            <div class="data-field"><span class="data-field__label">Наименование юр. лица</span><span class="data-field__value">ООО Брокер</span></div>
-                            <div class="data-field"><span class="data-field__label">ИНН</span><span class="data-field__value">1234567891</span></div>
-                            <div class="data-field"><label class="data-field__label">Электронная почта</label><input class="data-field__input" value="ivan123@gmail.com"></div>
-                            <div class="data-field data-field--error"><label class="data-field__label">Телефон</label><input class="data-field__input" value="+7-800-800-80-8_"><span class="data-field__error-text">Неверный формат номера</span></div>
+
+                    <div class="org-grid">
+                        <div class="org-logo">
+                            <span class="org-logo__text">LEXRAOC</span>
+                            <div class="org-logo__overlay" style="opacity: 1;">
+                                <span class="org-logo__action">
+                                    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 13.75V5C8.75 3.61929 9.86929 2.5 11.25 2.5H18.75C20.1307 2.5 21.25 3.61929 21.25 5L21.25 8.75L21.25 13.75H27.5L15 24.4808L2.5 13.75H8.75ZM18.75 5L18.75 8.75L18.75 13.75L18.75 16.25H20.3709L15 21.1881L9.62907 16.25H11.25L11.25 13.75L11.25 8.75L11.25 5H18.75ZM23.75 27.5C25.1307 27.5 26.25 26.3807 26.25 25H3.75C3.75 26.3807 4.86929 27.5 6.25 27.5H23.75Z" fill="#fff"/>
+                                    </svg>
+                                    Загрузить
+                                </span>
+                                <span class="org-logo__action">
+                                    <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 1.25H18.75C20.1307 1.25 21.25 2.36929 21.25 3.75V5H25C26.3807 5 27.5 6.11929 27.5 7.5V10C27.5 11.3807 26.3807 12.5 25 12.5H24.8998L23.75 26.25C23.75 27.6307 22.6307 28.75 21.25 28.75H8.74996C7.36925 28.75 6.24996 27.6307 6.25428 26.3538L5.0998 12.5H5C3.61929 12.5 2.5 11.3807 2.5 10V7.5C2.5 6.11929 3.61929 5 5 5H8.75V3.75C8.75 2.36929 9.86929 1.25 11.25 1.25ZM5 7.5H8.75H21.25H25V10H5V7.5ZM7.60809 12.5H22.3915L21.2543 26.1462L21.25 26.25H8.74998L7.60809 12.5ZM18.75 3.75V5H11.25V3.75H18.75Z" fill="#E31F1F"/>
+                                    </svg>
+                                    Удалить
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="data-fields data-fields--edit">
+                            <div class="data-field">
+                                <span class="data-field__label">Наименование юр. лица</span>
+                                <span class="data-field__value">ООО Брокер</span>
+                            </div>
+                            <div class="data-field">
+                                <span class="data-field__label">ИНН</span>
+                                <span class="data-field__value">1234567891</span>
+                            </div>
+                            <div class="data-field data-field--input">
+                                <span class="data-field__hint-color">Электронная почта</span>
+                                <input type="email" class="data-field__input" value="ivan123@gmail.com">
+                            </div>
+                            <div class="data-field data-field--input data-field--error">
+                                <span class="data-field__hint-color">Телефон</span>
+                                <input type="tel" class="data-field__input" value="+7-800-800-80-8_">
+                                <span class="data-field__error-text">Неверный формат номера</span>
+                            </div>
                         </div>
                     </div>
-                    <h2 class="data-card__title" style="margin-top: 40px;">Данные руководителя</h2>
-                    <div class="data-fields">
+
+                    <h2 class="data-card__title data-card__title--secondary">Данные руководителя</h2>
+                    <div class="data-fields" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
                         <div class="data-field"><span class="data-field__label">Фамилия</span><span class="data-field__value">Иванов</span></div>
                         <div class="data-field"><span class="data-field__label">Имя</span><span class="data-field__value">Иван</span></div>
                         <div class="data-field"><span class="data-field__label">Отчество</span><span class="data-field__value">Иванович</span></div>
                         <div class="data-field"><span class="data-field__label">Должность</span><span class="data-field__value">Ген. директор</span></div>
                     </div>
-                    <div class="data-field" style="margin-top: 24px;">
-                        <span class="data-field__label">Документы</span>
-                        <div class="doc-row">
-                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-                            <div class="doc-chip"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13H6V3z" stroke="currentColor" stroke-width="1.5"/></svg><div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div><button class="doc-chip__remove"><svg viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
-                            <button class="doc-add-btn">Добавить ещё</button>
+
+                    <div class="docs-block" style="margin-top: 32px;">
+                        <div class="docs-block__label">Документы</div>
+                        <div class="docs-edit">
+                            <div class="doc-chip doc-chip--edit">
+                                <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#1E71E6" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#1E71E6" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#1E71E6">PDF</text></svg>
+                                <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                <button class="doc-chip__remove" aria-label="Удалить"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                            </div>
+                            <div class="doc-chip doc-chip--edit">
+                                <svg class="doc-chip__icon" viewBox="0 0 28 28" fill="none"><path d="M5 3h12l6 6v16H5V3z" stroke="#9CA3AF" stroke-width="1.5" fill="#fff"/><path d="M17 3v6h6" stroke="#9CA3AF" stroke-width="1.5" fill="none"/><text x="14" y="20" text-anchor="middle" font-size="6" font-weight="700" fill="#9CA3AF">DOC</text></svg>
+                                <div class="doc-chip__meta"><span class="doc-chip__name">Filename</span><span class="doc-chip__size">10.2 MB</span></div>
+                                <button class="doc-chip__remove" aria-label="Удалить"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px;">
+                            <button class="add-more-btn">Добавить ещё</button>
                         </div>
                     </div>
-                    <button class="save-btn">Сохранить изменения</button>
+
+                    <div class="save-row">
+                        <button class="save-btn">Сохранить изменения</button>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <div class="account-footer">© Capital Group, 2025. Личный кабинет брокера</div>
         </div>
     </div>
 </main>
 
+<!-- ====== DEMO-БАР ПЕРЕКЛЮЧЕНИЯ СОСТОЯНИЙ ====== -->
 <div class="demo-bar">
-    <span>Состояния:</span>
-    <button class="demo-btn active" data-state="1">1. Просмотр</button>
-    <button class="demo-btn" data-state="2">2. Редактирование (ошибка)</button>
-    <button class="demo-btn" data-state="3">3. Редактирование (Добавить ещё)</button>
+    <span>Состояние:</span>
+    <button class="demo-btn active" data-state-btn="view">1. Просмотр</button>
+    <button class="demo-btn" data-state-btn="edit-error">2. Редактирование (ошибка)</button>
+    <button class="demo-btn" data-state-btn="edit-add">3. Редактирование (Добавить ещё)</button>
 </div>
 
 <script>
-document.querySelectorAll('.demo-btn[data-state]').forEach(b => {
-    b.addEventListener('click', () => {
-        const n = b.dataset.state;
-        document.querySelectorAll('.demo-btn[data-state]').forEach(x => x.classList.toggle('active', x === b));
-        document.querySelectorAll('.state').forEach(s => s.classList.toggle('is-active', s.dataset.state === n));
+// State switching
+document.querySelectorAll('[data-state-btn]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = btn.dataset.stateBtn;
+        document.querySelectorAll('.state').forEach(s => s.classList.toggle('is-active', s.dataset.state === target));
+        document.querySelectorAll('[data-state-btn]').forEach(b => b.classList.toggle('active', b === btn));
     });
+});
+// Quick edit-link from view-mode pencil icon
+document.querySelectorAll('[data-go-state]').forEach(el => {
+    el.addEventListener('click', () => {
+        const target = el.dataset.goState === 'edit' ? 'edit-error' : el.dataset.goState;
+        document.querySelector(`[data-state-btn="${target}"]`)?.click();
+    });
+});
+// Doc-chip remove (just visually disappear)
+document.body.addEventListener('click', (e) => {
+    const rm = e.target.closest('.doc-chip__remove');
+    if (rm) rm.closest('.doc-chip')?.remove();
 });
 </script>
 </body>
